@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artemon4ik8091.github.io || aswer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1f;
+            min-height: 100vh;
+            color: #eef1f3;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1f;
+            z-index: -3;
+        }
+
+        .splash {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -2;
+        }
+
+        .splash-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(63, 129, 142, 0.5);
+            top: 10%;
+            left: 5%;
+            animation: pulse1 6s ease-in-out infinite;
+        }
+
+        .splash-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(189, 220, 232, 0.4);
+            top: 60%;
+            right: 10%;
+            animation: pulse2 7s ease-in-out infinite;
+        }
+
+        .splash-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(236, 212, 197, 0.5);
+            bottom: 20%;
+            left: 30%;
+            animation: pulse3 5s ease-in-out infinite;
+        }
+
+        .splash-4 {
+            width: 180px;
+            height: 180px;
+            background: rgba(128, 93, 93, 0.5);
+            top: 30%;
+            right: 25%;
+            animation: pulse4 8s ease-in-out infinite;
+        }
+
+        .splash-5 {
+            width: 220px;
+            height: 220px;
+            background: rgba(147, 179, 185, 0.4);
+            top: 80%;
+            left: 60%;
+            animation: pulse5 6.5s ease-in-out infinite;
+        }
+
+        .splash-6 {
+            width: 160px;
+            height: 160px;
+            background: rgba(219, 191, 188, 0.5);
+            top: 5%;
+            right: 5%;
+            animation: pulse6 5.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse1 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.4) translate(30px, 20px); opacity: 0.8; }
+        }
+        @keyframes pulse2 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.3) translate(-25px, -15px); opacity: 0.7; }
+        }
+        @keyframes pulse3 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.5) translate(15px, -25px); opacity: 0.85; }
+        }
+        @keyframes pulse4 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+            50% { transform: scale(1.35) translate(-20px, 30px); opacity: 0.75; }
+        }
+        @keyframes pulse5 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.25) translate(25px, 10px); opacity: 0.7; }
+        }
+        @keyframes pulse6 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.4) translate(-15px, -20px); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .header-text {
+            font-size: 0.9rem;
+            color: rgba(147, 179, 185, 0.8);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #eef1f3 0%, #3f818e 50%, #805d5d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: rgba(238, 241, 243, 0.7);
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .decorative {
+            color: rgba(189, 220, 232, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: block;
+            padding: 22px 50px;
+            min-width: 520px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(63, 129, 142, 0.3);
+            border-radius: 12px;
+            color: #93b3b9;
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(63, 129, 142, 0.6);
+            box-shadow: 0 0 35px rgba(63, 129, 142, 0.2);
+            transform: translateY(-3px);
+            color: #bddce8;
+            text-shadow: 0 0 15px rgba(147, 179, 185, 0.4);
+        }
+
+        .btn-main {
+            min-width: 400px;
+            background: rgba(128, 93, 93, 0.1);
+            border-color: rgba(128, 93, 93, 0.3);
+            color: rgba(219, 191, 188, 0.9);
+        }
+
+        .btn-main:hover {
+            background: rgba(128, 93, 93, 0.2);
+            border-color: rgba(128, 93, 93, 0.5);
+            box-shadow: 0 0 35px rgba(128, 93, 93, 0.2);
+            color: #ecd4c5;
+        }
+
+        .decorative-footer {
+            color: rgba(189, 220, 232, 0.4);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 3px;
+            }
+
+            .container {
+                padding: 40px 15px;
+            }
+
+            .btn {
+                min-width: 100%;
+                padding: 18px 25px;
+                font-size: 0.95rem;
+            }
+
+            .btn-main {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="splash splash-1"></div>
+    <div class="splash splash-2"></div>
+    <div class="splash splash-3"></div>
+    <div class="splash splash-4"></div>
+    <div class="splash splash-5"></div>
+    <div class="splash splash-6"></div>
+
+    <div class="container">
+        <p class="header-text">artemon4ik8091.github.io || aswer</p>
+
+        <h1>Страница-развилка</h1>
+
+        <p class="description">
+            В ней нет ничего особенного. Она ведёт на другие страницы. Если кратко, то там хранится информация о дружественных мне проектах.<br>
+            Нажмите на желаемую кнопку для перехода.
+        </p>
+
+        <p class="decorative">‧⁺˚*･༓☾ ☽༓･*˚⁺‧</p>
+
+        <div class="buttons">
+            <a href="/rules/archive/moonlight-adventure/index.html" class="btn">Правила флуда MoonLight Adventure [ARCHIVE]</a>
+            <a href="/rules/archive/Velvet-Storm/index.html" class="btn">Правила флуда Velvet Storm [ARCHIVE]</a>
+            <a href="/rules/paradise/index.html" class="btn">Правила флуда PARADISE</a>
+            <a href="https://artemon4ik8091.github.io" class="btn btn-main">Главная страница</a>
+        </div>
+
+        <p class="decorative-footer">‧⁺˚*･༓☾ ☽༓･*˚⁺‧</p>
+    </div>
+</body>
+</html>

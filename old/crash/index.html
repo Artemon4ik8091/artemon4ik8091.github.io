@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>crash my browser</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon (1).ico" />
+  </head>
+  <body>
+    <center>
+      <h1>Click here to crash your browser</h1>
+      <button onclick="nimm()">Crash Me! You have a 3 second delay</button>
+      <button onclick="imm()">Crash Me! This is immediate</button>
+      <input type="text" id="myText" placeholder="In Seconds">
+      <button onclick="cus()">Enter</button>
+      <p>To uncrash it, please restart your Device.</p> 
+    </center>
+    <script>
+      function imm(){
+        while(1)location.reload(1)
+      }
+      function nimm(){
+        setTimeout(function(){ while(1)location.reload(1)}, 3000);
+       
+      }
+      function cus(){
+        setTimeout(function(){ while(1)location.reload(1)}, document.getElementById("myText").value*1000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правила флуда</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1f;
+            min-height: 100vh;
+            color: #eef1f3;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1f;
+            z-index: -3;
+        }
+
+        .splash {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -2;
+        }
+
+        .splash-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(63, 129, 142, 0.5);
+            top: 10%;
+            left: 5%;
+            animation: pulse1 6s ease-in-out infinite;
+        }
+
+        .splash-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(189, 220, 232, 0.4);
+            top: 60%;
+            right: 10%;
+            animation: pulse2 7s ease-in-out infinite;
+        }
+
+        .splash-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(236, 212, 197, 0.5);
+            bottom: 20%;
+            left: 30%;
+            animation: pulse3 5s ease-in-out infinite;
+        }
+
+        .splash-4 {
+            width: 180px;
+            height: 180px;
+            background: rgba(128, 93, 93, 0.5);
+            top: 30%;
+            right: 25%;
+            animation: pulse4 8s ease-in-out infinite;
+        }
+
+        .splash-5 {
+            width: 220px;
+            height: 220px;
+            background: rgba(147, 179, 185, 0.4);
+            top: 80%;
+            left: 60%;
+            animation: pulse5 6.5s ease-in-out infinite;
+        }
+
+        .splash-6 {
+            width: 160px;
+            height: 160px;
+            background: rgba(219, 191, 188, 0.5);
+            top: 5%;
+            right: 5%;
+            animation: pulse6 5.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse1 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.4) translate(30px, 20px); opacity: 0.8; }
+        }
+        @keyframes pulse2 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.3) translate(-25px, -15px); opacity: 0.7; }
+        }
+        @keyframes pulse3 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.5) translate(15px, -25px); opacity: 0.85; }
+        }
+        @keyframes pulse4 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.45; }
+            50% { transform: scale(1.35) translate(-20px, 30px); opacity: 0.75; }
+        }
+        @keyframes pulse5 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.4; }
+            50% { transform: scale(1.25) translate(25px, 10px); opacity: 0.7; }
+        }
+        @keyframes pulse6 {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            50% { transform: scale(1.4) translate(-15px, -20px); opacity: 0.8; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #eef1f3 0%, #3f818e 50%, #805d5d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: rgba(147, 179, 185, 0.8);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .decorative {
+            text-align: center;
+            color: rgba(189, 220, 232, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(63, 129, 142, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(63, 129, 142, 0.5);
+            box-shadow: 0 0 30px rgba(63, 129, 142, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #93b3b9;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #3f818e, #805d5d);
+            border-radius: 2px;
+        }
+
+        .card-title .icon {
+            color: rgba(189, 220, 232, 0.7);
+            font-size: 1rem;
+        }
+
+        .card-content {
+            color: rgba(238, 241, 243, 0.85);
+            line-height: 1.9;
+            font-size: 0.95rem;
+        }
+
+        .card-content p {
+            margin-bottom: 12px;
+        }
+
+        .rule-item {
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(63, 129, 142, 0.4);
+        }
+
+        .punishment {
+            color: rgba(219, 191, 188, 0.95);
+            font-size: 0.9rem;
+            margin-top: 6px;
+            padding: 8px 12px;
+            background: rgba(128, 93, 93, 0.15);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .warning {
+            color: rgba(236, 212, 197, 0.9);
+        }
+
+        .info-block {
+            color: rgba(238, 241, 243, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(63, 129, 142, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid rgba(63, 129, 142, 0.5);
+        }
+
+        .highlight {
+            color: #bddce8;
+            font-weight: 500;
+        }
+
+        .important {
+            color: #ecd4c5;
+        }
+
+        .link {
+            color: #93b3b9;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .link:hover {
+            color: #bddce8;
+            text-shadow: 0 0 10px rgba(147, 179, 185, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(63, 129, 142, 0.15);
+            border-radius: 16px;
+        }
+
+        footer p {
+            color: rgba(238, 241, 243, 0.5);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: #93b3b9;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #bddce8;
+            text-shadow: 0 0 10px rgba(147, 179, 185, 0.5);
+        }
+
+        footer .copyright {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(63, 129, 142, 0.15);
+            color: rgba(238, 241, 243, 0.4);
+        }
+
+        footer .decorative-footer {
+            color: rgba(189, 220, 232, 0.4);
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+
+            .container {
+                padding: 40px 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="splash splash-1"></div>
+    <div class="splash splash-2"></div>
+    <div class="splash splash-3"></div>
+    <div class="splash splash-4"></div>
+    <div class="splash splash-5"></div>
+    <div class="splash splash-6"></div>
+
+    <div class="container">
+        <header>
+            <h1>Правила флуда PARADISE</h1>
+            <p class="subtitle">Регламент общения</p>
+        </header>
+
+        <p class="decorative">‧⁺˚*･༓☾ ☽༓･*˚⁺‧</p>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">✧*。</span> Общий чат</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Общий чат — место для общения, а не для разборок. Все личные конфликты должны быть перенесены в личные сообщения.</p>
+                    <p>При возникновении такой ситуации администрация даёт <span class="highlight">устное предупреждение</span> участникам с требованием прекратить конфликт.</p>
+                    <div class="punishment">При игнорировании — варн без выяснения обстоятельств + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">☆ﾟ.*･｡ﾟ</span> Работа администрации</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Любое решение администрации по конфликтным ситуациям аргументируется пунктами действующего регламента.</p>
+                    <p>Новые правила могут вводиться администрацией самостоятельно либо выноситься на голосование участников на усмотрение руководства.</p>
+                    <p>В случае возникновения претензий к действиям администратора следует обращаться к <span class="important">владельцу или совладельцу</span> в личные сообщения.</p>
+                    <p><span class="highlight">Публичное оспаривание действий и решений администрации запрещено.</span></p>
+                    <div class="punishment">За несоблюдение — варн</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">｡.ﾟ+</span> Дискриминация</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p><span class="important">Категорически запрещено</span> любое осуждение или высмеивание человека за его национальность, вкусы, возраст, ориентацию.</p>
+                    <div class="punishment">Устное предупреждение → варн + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">｡*ﾟ+</span> Неприкосновенность частной жизни</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p><span class="important">Категорически запрещено</span> разглашение личной информации участника (ФИО, возраст, фобии, ориентация, секреты и т.д.) без разрешения самого участника.</p>
+                    <div class="punishment">Варн + мут на усмотрение администратора</div>
+                    <div class="punishment" style="margin-left: 10px;">При повторном нарушении — бан</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">.｡*♡</span> Юмор</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Шутки должны быть уместными и не переходить границы комфорта участников.</p>
+                    <p>Юмор формата «убейся», оскорбление личности и подобные выпады допустимы лишь при условии, что ваш собеседник <span class="highlight">не против</span> такого стиля общения.</p>
+                    <p>Если человек выразил протест — шутка считается нарушением.</p>
+                    <p class="warning">Даже имея согласие собеседника, не забывайте, что вы находитесь не в личке. Знайте меру и не превращайте чат в поток грязи.</p>
+                    <div class="punishment">Устное предупреждение → варн + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">つ｡☆</span> Контент 18+ и 21+</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>В медиа (порнография, расчленёнка, чрезмерная жестокость или селфхарм) <span class="important">строго запрещён</span> даже в скрытом формате под спойлером.</p>
+                    <p>Подобные темы разрешены <span class="highlight">только в виде текстового упоминания</span>.</p>
+                    <div class="punishment">Перманентный бан</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">∘˚˳°</span> Реклама</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Запрещена реклама сторонних проектов без одобрения администрации.</p>
+                    <div class="punishment">Удаление ссылки + варн + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">─=≡Σ</span> Созывы</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Использование массовых призывов (калл) разрешено <span class="highlight">только администрации</span> или с её разрешения.</p>
+                    <p>При ошибочном использовании тега (например: имя Каллисто) администрация первый раз выносит устное предупреждение.</p>
+                    <div class="punishment">При повторении — варн + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">｡:ﾟ</span> Спам</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Спам — отправка более <span class="highlight">4-х однотипных сообщений</span> подряд.</p>
+                    <div class="punishment">Мут 1 час + варн</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">⋆ ˚｡⋆୨୧˚</span> Политика</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Обсуждение политических тем <span class="important">запрещено</span>.</p>
+                    <p>При начале политической дискуссии администратор устно предупреждает всех участников о недопустимости темы.</p>
+                    <div class="punishment">При игнорировании — варн + мут на усмотрение администратора</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">❃.✮:▹</span> Роли</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>Позволяется менять роль не более <span class="highlight">4-х раз</span>.</p>
+                    <p>Также разрешено занимать за собой <span class="highlight">две роли</span>.</p>
+                </div>
+            </div>
+        </div>
+
+<div class="card">
+            <div class="card-title"><span class="icon">.·´¯`</span> Рест</div>
+            <div class="card-content">
+                <div class="info-block">
+                    Запрещено брать рест за два дня до чистки. Максимальный срок нахождения в ресте составляет <span class="highlight">3 недели</span>, при сложных ситуациях с согласия администрации может быть выдан рест на более долгий срок.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">ﾉ✧</span> Чистка</div>
+            <div class="card-content">
+                <div class="info-block">
+                    Чистка проводится по <span class="highlight">воскресеньям вечером</span>.
+                </div>
+                <div class="rule-item">
+                    <p>Норма — <span class="highlight">150 сообщений</span>.</p>
+                    <p>В случае недобора нормы выдаётся варн.</p>
+                    <p>Тех, кто неактивил больше 1 дня, добавляем на колесо фортуны — кто выпадет, тот получает варн и кик, остальные получают просто варн.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span class="icon">✦</span> Добровольный выход</div>
+            <div class="card-content">
+                <div class="rule-item">
+                    <p>При добровольном выходе необходимо <span class="important">отметить владельца</span>, указать свою роль и её источник.</p>
+                    <p class="warning">Пример: Роль: Рудбекия, Источник: Как переманить мужа на свою сторону, @юзер владельца</p>
+                    <div class="punishment">Если условие не выполняется — бан</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="decorative-footer">‧⁺˚*･༓☾ ☽༓･*˚⁺‧</p>
+            <p>Сайт был создан человеком с никнеймом <a href="https://t.me/aswer_user" target="_blank">@aswer_user</a></p>
+            <p>Текущая страница: <a href="https://artemon4ik8091.github.io/rules/paradise/">artemon4ik8091.github.io/rules/paradise/</a></p>
+            <p>Основной сайт: <a href="https://artemon4ik8091.github.io">artemon4ik8091.github.io</a></p>
+            <p class="copyright">© 2026 aswer. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
