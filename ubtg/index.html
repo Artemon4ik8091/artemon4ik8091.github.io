@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>UBTG — Руководство пользователя | Начало работы & Облачный Хост</title>
+  <meta name="description" content="Интерактивное руководство по UBTG: быстрый запуск через облачный хостинг @aswer_ubtg_host_bot или самостоятельная установка на свой сервер, команды и модули.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Ambient Glow Canvas -->
+  <div class="ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <!-- Fluent Top Navigation Bar -->
+  <header class="fluent-navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">UBTG Userbot</span>
+          <span class="brand-badge">User Guide 2.0</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#cloud-host" class="nav-link nav-link-cloud">☁️ Облачный Хост</a></li>
+          <li><a href="#about" class="nav-link">О боте</a></li>
+          <li><a href="#installation" class="nav-link">Установка</a></li>
+          <li><a href="#commands" class="nav-link">Команды</a></li>
+          <li><a href="#modules" class="nav-link">Модули</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="search-trigger-btn" onclick="document.getElementById('cmdSearchInput').focus(); location.href='#commands';" title="Поиск команд" aria-label="Поиск команд">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span>Поиск команд</span>
+          <kbd class="search-kbd">/</kbd>
+        </button>
+
+        <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="btn-icon" title="Telegram Бот Хостинга" aria-label="Открыть Telegram Бот Хостинга" style="color: #38bdf8;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+          </svg>
+        </a>
+
+        <a href="https://github.com/Artemon4ik8091/userbot-tg" target="_blank" rel="noopener noreferrer" class="btn-icon" title="Репозиторий на GitHub" aria-label="Открыть GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+
+        <button class="btn-icon mobile-menu-toggle" id="mobileMenuToggle" aria-label="Открыть навигационное меню" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer & Backdrop -->
+  <div class="mobile-backdrop" id="mobileBackdrop" aria-hidden="true"></div>
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-label="Мобильная навигация">
+    <div class="mobile-drawer-header">
+      <div class="brand-info">
+        <span class="brand-title">UBTG Userbot</span>
+        <span class="brand-badge">Меню навигации</span>
+      </div>
+      <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick Cloud Host Action -->
+    <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud mobile-cloud-cta">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+      </svg>
+      <span>Запустить в облаке</span>
+    </a>
+
+    <div class="mobile-drawer-section-title">Разделы руководства</div>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="#cloud-host" class="mobile-nav-link mobile-nav-link-cloud">
+          <span class="mobile-nav-icon">☁️</span>
+          <span>Облачный Хост</span>
+          <span class="mobile-nav-badge">Топ</span>
+        </a>
+      </li>
+      <li>
+        <a href="#pricingSection" class="mobile-nav-link">
+          <span class="mobile-nav-icon">💎</span>
+          <span>Тарифы и Цены</span>
+        </a>
+      </li>
+      <li>
+        <a href="#comparison" class="mobile-nav-link">
+          <span class="mobile-nav-icon">⚖️</span>
+          <span>Хост vs Свой сервер</span>
+        </a>
+      </li>
+      <li>
+        <a href="#about" class="mobile-nav-link">
+          <span class="mobile-nav-icon">💡</span>
+          <span>О юзерботе</span>
+        </a>
+      </li>
+      <li>
+        <a href="#prerequisites" class="mobile-nav-link">
+          <span class="mobile-nav-icon">🔑</span>
+          <span>Получение API (Шаг 0)</span>
+        </a>
+      </li>
+      <li>
+        <a href="#installation" class="mobile-nav-link">
+          <span class="mobile-nav-icon">📥</span>
+          <span>Установка на свой сервер</span>
+        </a>
+      </li>
+      <li>
+        <a href="#wizard" class="mobile-nav-link">
+          <span class="mobile-nav-icon">🌐</span>
+          <span>Веб-Мастер и QR-вход</span>
+        </a>
+      </li>
+      <li>
+        <a href="#first-steps" class="mobile-nav-link">
+          <span class="mobile-nav-icon">🚀</span>
+          <span>Первые шаги</span>
+        </a>
+      </li>
+      <li>
+        <a href="#commands" class="mobile-nav-link">
+          <span class="mobile-nav-icon">⚡</span>
+          <span>Справочник команд</span>
+        </a>
+      </li>
+      <li>
+        <a href="#modules" class="mobile-nav-link">
+          <span class="mobile-nav-icon">📦</span>
+          <span>Управление модулями</span>
+        </a>
+      </li>
+      <li>
+        <a href="#generator" class="mobile-nav-link">
+          <span class="mobile-nav-icon">⚙️</span>
+          <span>Генератор параметров CLI</span>
+        </a>
+      </li>
+      <li>
+        <a href="#autostart" class="mobile-nav-link">
+          <span class="mobile-nav-icon">🕒</span>
+          <span>Автозапуск 24/7 (systemd)</span>
+        </a>
+      </li>
+      <li>
+        <a href="#faq" class="mobile-nav-link">
+          <span class="mobile-nav-icon">❓</span>
+          <span>Частые вопросы (FAQ)</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mobile-drawer-footer">
+      <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="mobile-footer-link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+        <span>Telegram</span>
+      </a>
+      <a href="https://github.com/Artemon4ik8091/userbot-tg" target="_blank" rel="noopener noreferrer" class="mobile-footer-link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-container">
+      <div class="hero-text-col">
+        <div class="hero-badge-container">
+          <span class="hero-badge-dot"></span>
+          <span class="hero-badge-text">Официальное руководство пользователя</span>
+        </div>
+
+        <h1 class="hero-title">
+          Твой Telegram.<br>
+          <span class="gradient-text">На максимальной мощности.</span>
+        </h1>
+
+        <p class="hero-description">
+          <b>UBTG</b> — модульный асинхронный юзербот с личным ботом-ассистентом. Вы можете <b>запустить его в облаке за 1 минуту</b> по подписке через бота <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">@aswer_ubtg_host_bot</a> или <b>установить полностью бесплатно на свой сервер</b>.
+        </p>
+
+        <div class="hero-cta-group">
+          <!-- Cloud Host CTA Button -->
+          <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+            </svg>
+            Запустить в облаке (@aswer_ubtg_host_bot)
+          </a>
+
+          <!-- Self-Host Manual Install Button -->
+          <a href="#installation" class="fluent-btn fluent-btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Свой сервер (Self-Host)
+          </a>
+        </div>
+
+        <div class="hero-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">⚡</span>
+            <span>Облачный хост 24/7</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">✓</span>
+            <span>Вход по QR-коду</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">✓</span>
+            <span>Web-интерфейс</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">✓</span>
+            <span>Анти-спам защита</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Mockup (Interactive Telegram Message Demo) -->
+      <div class="hero-preview">
+        <div class="fluent-window">
+          <div class="window-titlebar">
+            <div class="window-controls">
+              <span class="window-dot dot-red"></span>
+              <span class="window-dot dot-yellow"></span>
+              <span class="window-dot dot-green"></span>
+            </div>
+            <div class="window-title">
+              <span>💬 Telegram Live Preview</span>
+            </div>
+            <span class="window-badge">UBTG Cloud Ready</span>
+          </div>
+
+          <div class="window-content">
+            <!-- Simulated Message 1 -->
+            <div class="chat-bubble">
+              <div style="font-size: 0.78rem; color: var(--text-tertiary); margin-bottom: 4px;">Вы • в чате</div>
+              <div><span class="chat-cmd">.ping</span></div>
+              
+              <div class="chat-result">
+                <div class="chat-stat-row">
+                  <span>🏓 <b>Статус:</b></span>
+                  <span style="color: var(--accent-emerald);">В сети (Online 24/7)</span>
+                </div>
+                <div class="chat-stat-row" id="demoStatusText">
+                  <span>⚡ <b>Задержка API:</b></span>
+                  <span class="chat-stat-val">34 мс</span>
+                </div>
+                <div class="chat-stat-row">
+                  <span>☁️ <b>Режим работы:</b></span>
+                  <span style="color: #38bdf8;">Cloud Host (@aswer_ubtg_host_bot)</span>
+                </div>
+                <button class="chat-interactive-btn" id="demoInteractiveBtn">
+                  <span>🔘 Интерактивная инлайн-кнопка бота (Кликни)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Simulated Message 2 -->
+            <div class="chat-bubble" style="background: rgba(2, 132, 199, 0.12); border-color: rgba(56, 189, 248, 0.35);">
+              <div style="font-size: 0.78rem; color: #38bdf8; font-weight: 600; margin-bottom: 4px;">☁️ Подписочный сервис @aswer_ubtg_host_bot</div>
+              <div style="font-size: 0.88rem;">
+                🎉 <b>Юзербот активен в облаке!</b><br>
+                Сервер работает бесперебойно 24/7.<br>
+                Управляйте модулями через <code>.ghinstall</code> прямо из Telegram.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Area with Sidebar & Sections -->
+  <main class="main-content">
+    <div class="content-layout">
+      
+      <!-- Sticky Sidebar -->
+      <aside class="fluent-sidebar">
+        <div class="sidebar-title">Навигация по гиду</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="#cloud-host" class="sidebar-link sidebar-link-cloud active">
+              <span class="sidebar-icon">☁️</span>
+              <span>Облачный Хост</span>
+            </a>
+          </li>
+          <li>
+            <a href="#pricingSection" class="sidebar-link sidebar-link-cloud">
+              <span class="sidebar-icon">💎</span>
+              <span>Тарифы и Цены</span>
+            </a>
+          </li>
+          <li>
+            <a href="#comparison" class="sidebar-link">
+              <span class="sidebar-icon">⚖️</span>
+              <span>Хост vs Свой сервер</span>
+            </a>
+          </li>
+          <li>
+            <a href="#about" class="sidebar-link">
+              <span class="sidebar-icon">💡</span>
+              <span>О юзерботе</span>
+            </a>
+          </li>
+          <li>
+            <a href="#prerequisites" class="sidebar-link">
+              <span class="sidebar-icon">🔑</span>
+              <span>Получение API (Шаг 0)</span>
+            </a>
+          </li>
+          <li>
+            <a href="#installation" class="sidebar-link">
+              <span class="sidebar-icon">📥</span>
+              <span>Установка на свой ПК/VPS</span>
+            </a>
+          </li>
+          <li>
+            <a href="#wizard" class="sidebar-link">
+              <span class="sidebar-icon">🌐</span>
+              <span>Веб-Мастер и QR-вход</span>
+            </a>
+          </li>
+          <li>
+            <a href="#first-steps" class="sidebar-link">
+              <span class="sidebar-icon">🚀</span>
+              <span>Первые шаги</span>
+            </a>
+          </li>
+          <li>
+            <a href="#commands" class="sidebar-link">
+              <span class="sidebar-icon">⚡</span>
+              <span>Справочник команд</span>
+            </a>
+          </li>
+          <li>
+            <a href="#modules" class="sidebar-link">
+              <span class="sidebar-icon">📦</span>
+              <span>Управление модулями</span>
+            </a>
+          </li>
+          <li>
+            <a href="#generator" class="sidebar-link">
+              <span class="sidebar-icon">⚙️</span>
+              <span>Генератор параметров CLI</span>
+            </a>
+          </li>
+          <li>
+            <a href="#autostart" class="sidebar-link">
+              <span class="sidebar-icon">🕒</span>
+              <span>Автозапуск 24/7</span>
+            </a>
+          </li>
+          <li>
+            <a href="#faq" class="sidebar-link">
+              <span class="sidebar-icon">❓</span>
+              <span>Частые вопросы (FAQ)</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Main Guide Sections -->
+      <div class="guide-sections">
+
+        <!-- Featured Section: Cloud Host via Telegram Bot -->
+        <section class="section-block" id="cloud-host">
+          <div class="section-tag section-tag-cloud">🔥 Самый быстрый способ</div>
+          <h2 class="section-title">Облачный Хостинг UBTG в 1 клик</h2>
+          <p class="section-desc">
+            Не хотите настраивать сервер, вводить команды в терминале и следить за аптаймом? Запустите юзербот прямо в облаке через официального Telegram-бота <b>@aswer_ubtg_host_bot</b>.
+          </p>
+
+          <!-- Cloud Host Hero Card -->
+          <div class="cloud-host-hero-card">
+            <div class="cloud-header-content">
+              <img src="assets/Component%202.png" alt="UBTG Host Avatar" class="cloud-bot-avatar">
+              <div class="cloud-info-col">
+                <h3>
+                  <span>UBTG Host Service</span>
+                  <span class="cloud-bot-tag">@aswer_ubtg_host_bot</span>
+                </h3>
+                <p>
+                  Полностью автоматизированный подписочный хостинг для вашего юзербота. Авторизуйтесь через QR-код прямо в боте — и ваш юзербот сразу работает 24/7 на быстром изолированном облачном сервере!
+                </p>
+              </div>
+              <div>
+                <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud" style="white-space: nowrap;">
+                  <span>🤖</span> Открыть бота
+                </a>
+              </div>
+            </div>
+
+            <!-- Standalone Bot Message Blocks -->
+            <div class="bot-messages-container">
+              <h4 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem; color: #e0f2fe; display: flex; align-items: center; gap: 0.5rem;">
+                <span>💬</span> Сообщения бота в Telegram:
+              </h4>
+
+              <div class="bot-messages-grid">
+                <!-- Message Card 1: Welcome & Features -->
+                <div class="bot-msg-card">
+                  <div>
+                    <div class="bot-msg-header">
+                      <div class="bot-msg-author">
+                        <img src="assets/Component%202.png" alt="UBTG Host Avatar" class="bot-msg-avatar">
+                        <div class="bot-msg-author-info">
+                          <span class="bot-msg-name">
+                            UBTG Host official <span class="bot-badge-tag">бот</span>
+                          </span>
+                          <span class="bot-msg-username">@aswer_ubtg_host_bot</span>
+                        </div>
+                      </div>
+                      <span class="bot-msg-time">12:58</span>
+                    </div>
+
+                    <div class="bot-msg-content">
+                      <p>👋 <b>Добро пожаловать в сервис Telegram Userbot!</b></p>
+                      <p>Здесь вы можете приобрести и управлять вашей персональной изолированной инстанцией юзербота.</p>
+                      <p style="margin-top: 0.85rem; font-weight: 700; color: #e0f2fe;">✨ Возможности:</p>
+                      <ul class="bot-msg-features-list">
+                        <li><span>•</span> Полная изоляция и безопасность</li>
+                        <li><span>•</span> Удобный веб-интерфейс для QR-авторизации</li>
+                        <li><span>•</span> Автоматический перезапуск и круглосуточная работа</li>
+                        <li><span>•</span> Управление сервисом прямо из этого бота</li>
+                      </ul>
+                      <p style="margin-top: 0.85rem; color: var(--text-secondary);">Выберите действие ниже:</p>
+                    </div>
+                  </div>
+
+                  <div class="bot-msg-keyboard">
+                    <div class="bot-msg-kbd-row">
+                      <button class="bot-inline-btn bot-inline-btn-accent" onclick="showToast('Выбран раздел: Продлить подписку 💎'); document.getElementById('pricingSection').scrollIntoView({behavior: 'smooth'});">
+                        <span>💎</span> Продлить подписку
+                      </button>
+                    </div>
+                    <div class="bot-msg-kbd-row">
+                      <button class="bot-inline-btn" onclick="showToast('Раздел Профиль: доступен в боте @aswer_ubtg_host_bot'); location.href='https://t.me/aswer_ubtg_host_bot';">
+                        <span>👤</span> Мой профиль
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Message Card 2: Period & Tariffs -->
+                <div class="bot-msg-card bot-msg-card-featured">
+                  <div>
+                    <div class="bot-msg-header">
+                      <div class="bot-msg-author">
+                        <img src="assets/Component%202.png" alt="UBTG Host Avatar" class="bot-msg-avatar">
+                        <div class="bot-msg-author-info">
+                          <span class="bot-msg-name">
+                            UBTG Host official <span class="bot-badge-tag">бот</span>
+                          </span>
+                          <span class="bot-msg-username">@aswer_ubtg_host_bot</span>
+                        </div>
+                      </div>
+                      <span class="bot-msg-time">12:58</span>
+                    </div>
+
+                    <div class="bot-msg-content">
+                      <p>💎 <b>Выберите период подписки:</b></p>
+                      <ul class="bot-msg-features-list" style="margin: 0.85rem 0;">
+                        <li><span>•</span> <b>1 Месяц:</b> 35 XTR / 69 RUB</li>
+                        <li><span>•</span> <b>3 Месяца:</b> 98 XTR / 193 RUB <i style="color: var(--accent-emerald);">(выгода ~7%)</i></li>
+                        <li><span>•</span> <b>1 Год:</b> 349 XTR / 687 RUB <i style="color: var(--accent-emerald);">(выгода ~17%)</i></li>
+                      </ul>
+                      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.75rem;">
+                        В стоимость включен отдельный системный сервис, автозапуск и круглосуточная работа.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="bot-msg-keyboard">
+                    <div class="bot-msg-kbd-row">
+                      <button class="bot-inline-btn" onclick="showToast('Тариф: 1 Месяц (69 RUB / 35 XTR)'); location.href='https://t.me/aswer_ubtg_host_bot';">
+                        1 Месяц (30 дней) — 69 ₽
+                      </button>
+                    </div>
+                    <div class="bot-msg-kbd-row">
+                      <button class="bot-inline-btn" onclick="showToast('Тариф: 3 Месяца (193 RUB / 98 XTR)'); location.href='https://t.me/aswer_ubtg_host_bot';">
+                        3 Месяца (90 дней) — 193 ₽ <small style="color: var(--accent-emerald); margin-left: 4px;">(-7%)</small>
+                      </button>
+                    </div>
+                    <div class="bot-msg-kbd-row">
+                      <button class="bot-inline-btn bot-inline-btn-accent" onclick="showToast('Тариф: 1 Год (687 RUB / 349 XTR)'); location.href='https://t.me/aswer_ubtg_host_bot';">
+                        🔥 1 Год (365 дней) — 687 ₽ <small style="color: var(--accent-emerald); margin-left: 4px;">(-17%)</small>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dedicated Tariff Pricing Plans Grid -->
+            <div class="pricing-section-container" id="pricingSection">
+              <div style="text-align: center; max-width: 650px; margin: 0 auto 1.5rem;">
+                <h3 style="font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: #ffffff;">
+                  Тарифные планы хостинга
+                </h3>
+                <p style="color: var(--text-secondary); font-size: 1rem;">
+                  Оплата напрямую в Telegram через Telegram Stars (XTR) или в рублях (RUB):
+                </p>
+              </div>
+
+              <div class="pricing-plans-grid">
+                <!-- Plan 1: 1 Month -->
+                <div class="plan-card">
+                  <div class="plan-header">
+                    <div class="plan-name">1 Месяц</div>
+                    <div class="plan-period-badge">Период: 30 дней</div>
+                    <div class="plan-price-box">
+                      <div class="plan-price-rub">69 ₽</div>
+                      <div class="plan-price-stars">35 ⭐ XTR</div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                      Идеально для быстрого знакомства и тестирования всех возможностей юзербота.
+                    </p>
+                  </div>
+
+                  <ul class="plan-features">
+                    <li><span>✓</span> <b>30 дней</b> работы 24/7</li>
+                    <li><span>✓</span> Изолированная инстанция</li>
+                    <li><span>✓</span> Вход по QR-коду</li>
+                    <li><span>✓</span> Доступ к <code>.ghinstall</code></li>
+                    <li><span>✓</span> Защищённый режим <code>--host</code></li>
+                  </ul>
+
+                  <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-secondary" style="width: 100%; justify-content: center;">
+                    Выбрать 1 Месяц
+                  </a>
+                </div>
+
+                <!-- Plan 2: 3 Months -->
+                <div class="plan-card">
+                  <div class="plan-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="plan-name">3 Месяца</div>
+                      <span class="plan-discount-tag">Выгода ~7%</span>
+                    </div>
+                    <div class="plan-period-badge">Период: 90 дней</div>
+                    <div class="plan-price-box">
+                      <div class="plan-price-rub">193 ₽</div>
+                      <div class="plan-price-stars">98 ⭐ XTR</div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                      Популярный выбор для стабильной работы и автоматизации на весь сезон.
+                    </p>
+                  </div>
+
+                  <ul class="plan-features">
+                    <li><span>✓</span> <b>90 дней</b> бесперебойной работы</li>
+                    <li><span>✓</span> Экономия ~7% по сравнению с 1 мес.</li>
+                    <li><span>✓</span> Изолированная инстанция</li>
+                    <li><span>✓</span> Вход по QR-коду</li>
+                    <li><span>✓</span> Авто-перезапуск при сбоях</li>
+                  </ul>
+
+                  <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-secondary" style="width: 100%; justify-content: center;">
+                    Выбрать 3 Месяца
+                  </a>
+                </div>
+
+                <!-- Plan 3: 1 Year (Hit) -->
+                <div class="plan-card plan-card-popular">
+                  <span class="plan-ribbon">🔥 ХИТ • Выгода ~17%</span>
+                  <div class="plan-header">
+                    <div class="plan-name">1 Год</div>
+                    <div class="plan-period-badge">Период: 365 дней</div>
+                    <div class="plan-price-box">
+                      <div class="plan-price-rub">687 ₽</div>
+                      <div class="plan-price-stars">349 ⭐ XTR</div>
+                    </div>
+                    <p style="font-size: 0.88rem; color: #bae6fd;">
+                      Максимальная экономия: всего ~57 ₽ в месяц за полный год бесперебойной работы!
+                    </p>
+                  </div>
+
+                  <ul class="plan-features">
+                    <li><span>✓</span> <b>365 дней</b> круглосуточной работы 24/7</li>
+                    <li><span>✓</span> Максимальная выгода ~17%</li>
+                    <li><span>✓</span> Выделенный облачный сервис</li>
+                    <li><span>✓</span> Приоритетные обновления ядра</li>
+                    <li><span>✓</span> Поддержка в Telegram</li>
+                  </ul>
+
+                  <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud" style="width: 100%; justify-content: center;">
+                    Оформить 1 Год (687 ₽)
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Host Mode Features & Security Note -->
+            <div class="fluent-callout callout-cloud" style="margin-top: 2rem;">
+              <span class="callout-icon">🛡️</span>
+              <div>
+                <b>Особенности защищённого режима хостинга (флаг <code>--host</code>):</b><br>
+                На публичном подписочном хостинге в целях безопасности вашей сессии и защиты сервера активирован режим <code>--host</code>:
+                <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.92rem; line-height: 1.7;">
+                  <li>🔒 <b>Отключён терминал (<code>.terminal</code>)</b> — выполнение произвольных системных shell-команд заблокировано.</li>
+                  <li>🔒 <b>Отключён локальный инсталлер (<code>.install</code> из чата)</b> — установка непроверенных файлов защищает хост от вредоносного кода.</li>
+                  <li>✅ <b>Полный доступ к GitHub каталогу (<code>.ghinstall</code>, <code>.ghsearch</code>, <code>.upgrade</code>)</b> — все проверенные модули из официального репозитория работают без ограничений!</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: Comparison (Cloud Host vs Self-Host) -->
+        <section class="section-block" id="comparison">
+          <div class="section-tag">Сравнение вариантов</div>
+          <h2 class="section-title">Что выбрать: Облачный Хост или Свой Сервер?</h2>
+          <p class="section-desc">
+            Оба варианта полностью поддерживаются проектом. Выбирайте тот, который удобнее именно вам:
+          </p>
+
+          <div class="table-scroll-hint">
+            <span>↔</span> Свайпайте таблицу для просмотра всех колонок
+          </div>
+
+          <div class="comparison-table-wrapper">
+            <table class="fluent-table">
+              <thead>
+                <tr>
+                  <th>Параметр</th>
+                  <th class="th-highlight">☁️ Облачный Хост (@aswer_ubtg_host_bot)</th>
+                  <th>🛠️ Свой Сервер / ПК (Self-Host)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Время запуска</td>
+                  <td class="td-highlight"><b>~1 минута</b> (QR прямо в Telegram)</td>
+                  <td>15–30 минут (настройка Python, Git)</td>
+                </tr>
+                <tr>
+                  <td>Сложность</td>
+                  <td class="td-highlight"><b>Для новичков</b> (кнопки в боте)</td>
+                  <td>Требуются базовые навыки Linux/CLI</td>
+                </tr>
+                <tr>
+                  <td>Работа 24/7</td>
+                  <td class="td-highlight"><b>Включено из коробки</b></td>
+                  <td>Нужно арендовать VPS или держать ПК включённым</td>
+                </tr>
+                <tr>
+                  <td>Установка модулей из GitHub</td>
+                  <td class="td-highlight">✅ Доступна (<code>.ghinstall</code>)</td>
+                  <td>✅ Доступна (<code>.ghinstall</code>)</td>
+                </tr>
+                <tr>
+                  <td>Установка файлов из чата</td>
+                  <td class="td-highlight">🚫 Отключена ради безопасности</td>
+                  <td>✅ Доступна (<code>.install</code>)</td>
+                </tr>
+                <tr>
+                  <td>Консоль сервера</td>
+                  <td class="td-highlight">🚫 Отключена (<code>--host</code>)</td>
+                  <td>✅ Доступна (<code>.terminal</code>)</td>
+                </tr>
+                <tr>
+                  <td>Обновления ядра</td>
+                  <td class="td-highlight"><b>Автоматически на сервере</b></td>
+                  <td>Вручную командой <code>.update now</code></td>
+                </tr>
+                <tr>
+                  <td>Стоимость</td>
+                  <td class="td-highlight">Доступная подписка в Telegram</td>
+                  <td>Бесплатно (или аренда своего VPS)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 1: About Userbot -->
+        <section class="section-block" id="about">
+          <div class="section-tag">Раздел 1 • Архитектура</div>
+          <h2 class="section-title">Что такое UBTG и как он работает?</h2>
+          <p class="section-desc">
+            <b>UBTG (Userbot Telegram)</b> — это инструмент для автоматизации вашего Telegram-аккаунта. В отличие от обычных чат-ботов, юзербот выполняет команды прямо от вашего имени через префикс точки (например, <code>.ping</code> или <code>.info</code>).
+          </p>
+
+          <div class="cards-grid">
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🚀</div>
+              <h3 class="card-title">Команды на лету</h3>
+              <p class="card-text">
+                Вы просто пишете команду с точкой (<code>.команда</code>) в любой чат или «Избранное». Юзербот моментально редактирует ваше сообщение, выводя результат.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🤖</div>
+              <h3 class="card-title">Собственный Бот-Ассистент</h3>
+              <p class="card-text">
+                Юзербот сам автоматически создаёт для вас Telegram-бота через <b>@BotFather</b>. Это даёт интерактивные инлайн-кнопки в сообщениях и личные системные уведомления.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">📦</div>
+              <h3 class="card-title">Умные модули</h3>
+              <p class="card-text">
+                Ставьте готовые плагины из каталога одной командой <code>.ghinstall</code>. Если модулю нужны библиотеки, бот сам скачает их через pip и перезагрузится.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🛡️</div>
+              <h3 class="card-title">Защита от спамбана</h3>
+              <p class="card-text">
+                В ядро встроен Rate Limiter и перехватчик FloodWait, которые не позволят зафлудить Telegram API и защитят аккаунт от временных ограничений.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Prerequisites (API ID & Hash) -->
+        <section class="section-block" id="prerequisites">
+          <div class="section-tag">Раздел 2 • Подготовка</div>
+          <h2 class="section-title">Шаг 0: Получение ключей Telegram API</h2>
+          <p class="section-desc">
+            Для самостоятельного запуска на своём сервере требуются два параметра: <code>app_id</code> (число) и <code>hash_id</code> (строка). Получить их можно бесплатно за 2 минуты на официальном сайте Telegram.
+          </p>
+
+          <div class="stepper-container">
+            <!-- Step 1 -->
+            <div class="step-card">
+              <div class="step-badge">1</div>
+              <div class="step-content">
+                <h3 class="step-title">Авторизуйтесь на my.telegram.org</h3>
+                <p class="step-desc">
+                  Откройте официальный портал разработчиков Telegram: <a href="https://my.telegram.org" target="_blank" rel="noopener noreferrer" style="color: var(--text-accent); font-weight: 600;">https://my.telegram.org</a>. Введите ваш номер телефона с кодом страны (например, <code>+79991234567</code>) и подтвердите вход кодом из Telegram.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+              <div class="step-badge">2</div>
+              <div class="step-content">
+                <h3 class="step-title">Перейдите в раздел «API development tools»</h3>
+                <p class="step-desc">
+                  В главном меню кликните по пункту <b>API development tools</b>. Если вы заходите впервые, появится форма создания приложения.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+              <div class="step-badge">3</div>
+              <div class="step-content">
+                <h3 class="step-title">Заполните форму приложения</h3>
+                <p class="step-desc">
+                  Заполните поля формы произвольными данными:
+                </p>
+                <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8; font-size: 0.95rem;">
+                  <li><b>App title:</b> например, <code>MyTelegramUB</code></li>
+                  <li><b>Short name:</b> например, <code>myuserbot</code></li>
+                  <li><b>Platform:</b> Desktop / Other</li>
+                </ul>
+                <p class="step-desc" style="margin-top: 0.75rem;">
+                  Нажмите синюю кнопку <b>Create application</b>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+              <div class="step-badge">4</div>
+              <div class="step-content">
+                <h3 class="step-title">Скопируйте `App api_id` и `App api_hash`</h3>
+                <p class="step-desc">
+                  На странице отобразятся ваши персональные данные:
+                </p>
+                <div class="code-container">
+                  <div class="code-header">
+                    <span class="code-lang">Пример ключей</span>
+                  </div>
+                  <div class="code-body">
+<pre><code><span class="code-comment"># Ваши API данные (пример):</span>
+App api_id:   <span class="code-func">28471923</span>           <span class="code-comment">(число из 7-8 цифр)</span>
+App api_hash: <span class="code-str">"b1a9e8f4c2d3a1e0b5f8a7e2c9d01234"</span> <span class="code-comment">(строка из 32 символов)</span></code></pre>
+                  </div>
+                </div>
+
+                <div class="fluent-callout callout-warning">
+                  <span class="callout-icon">⚠️</span>
+                  <div>
+                    <b>Правило безопасности:</b> Никогда не передавайте ваш <code>hash_id</code> и файл <code>userbot.session</code> третьим лицам! Эти данные дают доступ к вашему аккаунту.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Installation -->
+        <section class="section-block" id="installation">
+          <div class="section-tag">Раздел 3 • Установка</div>
+          <h2 class="section-title">Самостоятельная установка и запуск</h2>
+          <p class="section-desc">
+            Выберите платформу, на которой вы хотите развернуть юзербот:
+          </p>
+
+          <div class="fluent-tabs-wrapper">
+            <div class="fluent-tab-nav">
+              <button class="fluent-tab-btn active" data-tab="tab-cloud">
+                <span>☁️</span> Облачный Хост (@aswer_ubtg_host_bot)
+              </button>
+              <button class="fluent-tab-btn" data-tab="tab-local">
+                <span>💻</span> Компьютер (Windows / Linux / macOS)
+              </button>
+              <button class="fluent-tab-btn" data-tab="tab-vps">
+                <span>☁️</span> Сервер VPS (Ubuntu / Debian)
+              </button>
+              <button class="fluent-tab-btn" data-tab="tab-termux">
+                <span>📱</span> Смартфон (Android Termux)
+              </button>
+            </div>
+
+            <!-- Tab 0: Cloud Host -->
+            <div class="tab-pane active" id="tab-cloud">
+              <div class="fluent-card fluent-card-cloud" style="margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 700; color: #38bdf8; margin-bottom: 0.5rem;">
+                  🚀 Самый простой запуск без кода и серверов
+                </h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                  1. Перейдите в бота <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-weight: 700;">@aswer_ubtg_host_bot</a> в Telegram.<br>
+                  2. Выберите подходящий тариф подписки.<br>
+                  3. Отсканируйте QR-код в боте через камеру Telegram.<br>
+                  4. Бот моментально запустит ваш юзербот 24/7 в облаке!
+                </p>
+                <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud">
+                  <span>🤖</span> Открыть @aswer_ubtg_host_bot
+                </a>
+              </div>
+            </div>
+
+            <!-- Tab 1: Local OS -->
+            <div class="tab-pane" id="tab-local">
+              <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Убедитесь, что у вас установлены <b>Python 3.9+</b> и <b>Git</b>. Откройте Терминал (Linux/macOS) или PowerShell (Windows) и выполните:
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-lang">Bash / Terminal</span>
+                  <button class="code-copy-btn" data-copy="git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+pip install -r requirements.txt
+python3 userbot.py">
+                    <span>📋</span> Скопировать
+                  </button>
+                </div>
+                <div class="code-body">
+<pre><code><span class="code-comment"># 1. Клонируем репозиторий</span>
+git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+
+<span class="code-comment"># 2. Устанавливаем базовые зависимости (Telethon, QRCode, psutil)</span>
+pip install -r requirements.txt
+
+<span class="code-comment"># 3. Запускаем мастер настройки юзербота</span>
+python3 userbot.py</code></pre>
+                </div>
+              </div>
+
+              <div class="fluent-callout callout-tip">
+                <span class="callout-icon">💡</span>
+                <div>
+                  <b>Рекомендация:</b> Рекомендуется использовать виртуальное окружение: <code>python3 -m venv venv && source venv/bin/activate</code> перед установкой зависимостей.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 2: VPS Server -->
+            <div class="tab-pane" id="tab-vps">
+              <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Для круглосуточной работы 24/7 на собственном сервере VPS (Ubuntu / Debian):
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-lang">Ubuntu / Debian Bash</span>
+                  <button class="code-copy-btn" data-copy="sudo apt update && sudo apt install -y python3 python3-pip git tmux
+git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+pip3 install -r requirements.txt
+python3 userbot.py">
+                    <span>📋</span> Скопировать
+                  </button>
+                </div>
+                <div class="code-body">
+<pre><code><span class="code-comment"># 1. Обновляем пакеты и ставим python, git, tmux</span>
+sudo apt update && sudo apt install -y python3 python3-pip git tmux
+
+<span class="code-comment"># 2. Скачиваем репозиторий</span>
+git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+
+<span class="code-comment"># 3. Устанавливаем библиотеки</span>
+pip3 install -r requirements.txt
+
+<span class="code-comment"># 4. Запускаем юзербот</span>
+python3 userbot.py</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 3: Termux Android -->
+            <div class="tab-pane" id="tab-termux">
+              <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Вы можете запускать юзербот прямо на телефоне Android через приложение <b>Termux</b> (скачивайте с F-Droid):
+              </p>
+
+              <div class="code-container">
+                <div class="code-header">
+                  <span class="code-lang">Termux Android</span>
+                  <button class="code-copy-btn" data-copy="pkg update -y && pkg install -y python git clang
+git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+pip install -r requirements.txt
+python userbot.py">
+                    <span>📋</span> Скопировать
+                  </button>
+                </div>
+                <div class="code-body">
+<pre><code><span class="code-comment"># 1. Ставим необходимые пакеты</span>
+pkg update -y && pkg install -y python git clang
+
+<span class="code-comment"># 2. Скачиваем и переходим в папку</span>
+git clone https://github.com/Artemon4ik8091/userbot-tg.git
+cd userbot-tg
+
+<span class="code-comment"># 3. Устанавливаем зависимости</span>
+pip install -r requirements.txt
+
+<span class="code-comment"># 4. Запуск</span>
+python userbot.py</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Web Wizard & QR Login -->
+        <section class="section-block" id="wizard">
+          <div class="section-tag">Раздел 4 • Авторизация</div>
+          <h2 class="section-title">Веб-Мастер первого запуска и вход по QR</h2>
+          <p class="section-desc">
+            При первом самостоятельном запуске юзербот автоматически поднимет красивый локальный веб-сервер авторизации на порту <b>8080</b>.
+          </p>
+
+          <div class="cards-grid">
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🌐</div>
+              <h3 class="card-title">1. Откройте веб-страницу</h3>
+              <p class="card-text">
+                Перейдите в браузере по адресу: <br>
+                <code style="color: var(--accent-cyan); font-weight: bold; font-size: 1rem;">http://127.0.0.1:8080</code><br>
+                <small style="color: var(--text-tertiary);">(или <code>http://IP_вашего_сервера:8080</code>)</small>
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🔑</div>
+              <h3 class="card-title">2. Введите API ключи</h3>
+              <p class="card-text">
+                Вставьте полученные на Шаге 0 <code>app_id</code> и <code>hash_id</code>. При необходимости настройте прокси (HTTP / SOCKS5 / SOCKS4).
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">📱</div>
+              <h3 class="card-title">3. Сканируйте QR в Telegram</h3>
+              <p class="card-text">
+                На экране появится QR-код. Откройте в Telegram на смартфоне: <b>Настройки → Устройства → Подключить устройство</b> и наведите камеру.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🤖</div>
+              <h3 class="card-title">4. Имя бота-ассистента</h3>
+              <p class="card-text">
+                После входа задайте желаемый логин для встроенного бота или оставьте поле пустым — ядро сгенерирует бота автоматически через <b>@BotFather</b>!
+              </p>
+            </div>
+          </div>
+
+          <div class="fluent-callout callout-info">
+            <span class="callout-icon">💡</span>
+            <div>
+              <b>Консольный режим без браузера:</b> Если у вас чистый сервер без веб-доступа, запустите бот с флагом <code>python3 userbot.py --no-web</code> — ключи и ASCII QR-код для сканирования отобразятся прямо в терминале.
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: First Steps -->
+        <section class="section-block" id="first-steps">
+          <div class="section-tag">Раздел 5 • Проверка</div>
+          <h2 class="section-title">Первые шаги: Проверяем работу</h2>
+          <p class="section-desc">
+            Сразу после успешной авторизации ваш юзербот готов к работе! Вот три простых шага для первой проверки:
+          </p>
+
+          <div class="stepper-container">
+            <div class="step-card">
+              <div class="step-badge">1</div>
+              <div class="step-content">
+                <h3 class="step-title">Проверьте ЛС от созданного бота-помощника</h3>
+                <p class="step-desc">
+                  В ваш Telegram придёт личное сообщение от нового бота-ассистента со статусом: <i>«🚀 Юзербот успешно запущен!»</i>. Бот готов отправлять вам уведомления и обслуживать интерактивные кнопки.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">2</div>
+              <div class="step-content">
+                <h3 class="step-title">Отправьте тестовую команду <code>.ping</code></h3>
+                <p class="step-desc">
+                  Зайдите в чат «Избранное» (Saved Messages) или любой другой диалог и напишите:
+                </p>
+                <div class="code-container">
+                  <div class="code-body">
+<pre><code>.ping</code></pre>
+                  </div>
+                </div>
+                <p class="step-desc">
+                  Сообщение мгновенно отредактируется и покажет миллисекунды отклика до серверов Telegram.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-badge">3</div>
+              <div class="step-content">
+                <h3 class="step-title">Вызовите системную справку <code>.help</code></h3>
+                <p class="step-desc">
+                  Напишите <code>.help</code>, чтобы увидеть список всех загруженных модулей и доступных команд. Системные модули будут отмечены значком 🔒.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: Interactive Command Palette -->
+        <section class="section-block" id="commands">
+          <div class="section-tag">Раздел 6 • Справочник</div>
+          <h2 class="section-title">Интерактивный каталог команд</h2>
+          <p class="section-desc">
+            Используйте мгновенный поиск или фильтрацию по категориям. Каждая команда помечена значком доступности на Облачном Хосте:
+          </p>
+
+          <div class="command-filter-container">
+            <div class="search-bar-row">
+              <input type="text" class="cmd-search-input" id="cmdSearchInput" placeholder="🔍 Начните вводить название команды, например: .info, .ghinstall, .help...">
+            </div>
+
+            <div class="filter-pills">
+              <button class="filter-pill active" data-filter="all">Все команды</button>
+              <button class="filter-pill" data-filter="system">🔒 Системные</button>
+              <button class="filter-pill" data-filter="module">📦 Магазин & Модули</button>
+              <button class="filter-pill" data-filter="config">⚙️ Конфигурация</button>
+            </div>
+          </div>
+
+          <div class="commands-grid" id="commandsGrid">
+            <!-- Command: .help -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.help [модуль]</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Выводит список всех установленных модулей или подробное описание конкретного модуля со всеми его командами.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.help Info</code>
+                <span class="cmd-copy-icon" data-copy=".help Info" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .ping -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.ping</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Измеряет задержку между отправкой команды и ответом серверов Telegram в миллисекундах.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.ping</code>
+                <span class="cmd-copy-icon" data-copy=".ping" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .info -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.info</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Показывает красивую карточку о юзерботе, нагрузке на ЦП, ОЗУ, операционной системе, ветке и коммите.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.info</code>
+                <span class="cmd-copy-icon" data-copy=".info" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .infohelp -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.infohelp</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Инструкция по кастомизации вывода <code>.info</code>: добавление своей картинки, гифки или изменение текста.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.infohelp</code>
+                <span class="cmd-copy-icon" data-copy=".infohelp" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .ghsearch -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.ghsearch &lt;запрос&gt;</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Ищет доступные модули в официальном репозитории по ключевому слову или названию.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.ghsearch спам</code>
+                <span class="cmd-copy-icon" data-copy=".ghsearch спам" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .ghinstall -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.ghinstall &lt;имя&gt;</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Скачивает и устанавливает проверенный модуль из репозитория GitHub. Автоматически ставит зависимости pip и делает мягкий рестарт.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.ghinstall weather</code>
+                <span class="cmd-copy-icon" data-copy=".ghinstall weather" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .install (Chat reply) -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.install (из файла)</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-disabled">🚫 Без Хоста</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Установка модуля из файла в чате (реплай на <code>.py</code>). <i>Отключён в режиме хостинга <code>--host</code> в целях безопасности.</i>
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.install (в реплай на .py)</code>
+                <span class="cmd-copy-icon" data-copy=".install" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .uninstall -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.uninstall &lt;имя&gt;</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Безопасно удаляет пользовательский модуль из папки <code>modules/</code> и выгружает его команды.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.uninstall spammer</code>
+                <span class="cmd-copy-icon" data-copy=".uninstall spammer" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .sendmod -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.sendmod &lt;имя&gt;</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Отправляет файл указанного модуля в чат в виде документа (удобно делиться плагинами с друзьями).
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.sendmod weather</code>
+                <span class="cmd-copy-icon" data-copy=".sendmod weather" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .upgrade -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.upgrade</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Проверяет наличие свежих версий всех установленных модулей в репозитории GitHub и обновляет их.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.upgrade</code>
+                <span class="cmd-copy-icon" data-copy=".upgrade" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .fixreq -->
+            <div class="cmd-card" data-category="module">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.fixreq</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-module">Модули 📦</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Сканирует все локальные модули на наличие метки <code># requires:</code> и доустанавливает недостающие библиотеки.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.fixreq</code>
+                <span class="cmd-copy-icon" data-copy=".fixreq" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .cfg -->
+            <div class="cmd-card" data-category="config">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.cfg [help|get|set]</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-cfg">Конфиг ⚙️</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Интерактивное управление настройками модулей в <code>Global_config.json</code> прямо из переписки.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.cfg set module_info media_path https://...</code>
+                <span class="cmd-copy-icon" data-copy=".cfg help" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .settings -->
+            <div class="cmd-card" data-category="config">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.settings</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-cfg">Конфиг ⚙️</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Показывает системные параметры ядра: статус бота-ассистента, активный прокси и текущий ID владельца.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.settings</code>
+                <span class="cmd-copy-icon" data-copy=".settings" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .resettoken -->
+            <div class="cmd-card" data-category="config">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.resettoken</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-cfg">Конфиг ⚙️</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Автоматически обращается к @BotFather, перевыпускает токен бота-ассистента и перезапускает его.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.resettoken</code>
+                <span class="cmd-copy-icon" data-copy=".resettoken" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .update -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.update [now|force]</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Проверяет и накатывает обновления ядра с GitHub. При вызове <code>.update now</code> выполняет автообновление и перезагрузку.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.update now</code>
+                <span class="cmd-copy-icon" data-copy=".update now" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .restart -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.restart</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-safe">Хост: Да</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Полная бесшовная перезагрузка ядра и всех модулей с сохранением контекста последнего сообщения.
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.restart</code>
+                <span class="cmd-copy-icon" data-copy=".restart" title="Скопировать">📋</span>
+              </div>
+            </div>
+
+            <!-- Command: .terminal -->
+            <div class="cmd-card" data-category="system">
+              <div>
+                <div class="cmd-card-top">
+                  <span class="cmd-name">.terminal &lt;команда&gt;</span>
+                  <div class="cmd-badges-wrap">
+                    <span class="cmd-badge badge-system">Системное 🔒</span>
+                    <span class="cmd-badge badge-host-disabled">🚫 Без Хоста</span>
+                  </div>
+                </div>
+                <p class="cmd-desc">
+                  Выполняет shell-команду Linux. <i>Отключён в режиме хостинга <code>--host</code> в целях изоляции и безопасности сервера.</i>
+                </p>
+              </div>
+              <div class="cmd-usage">
+                <code>.terminal uname -a</code>
+                <span class="cmd-copy-icon" data-copy=".terminal uname -a" title="Скопировать">📋</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 7: Module Management -->
+        <section class="section-block" id="modules">
+          <div class="section-tag">Раздел 7 • Плагины</div>
+          <h2 class="section-title">Работа с модулями и Магазином</h2>
+          <p class="section-desc">
+            Вам никогда не нужно вручную копировать файлы или устанавливать сложные пакеты. Юзербот имеет встроенную экосистему управления расширениями.
+          </p>
+
+          <div class="cards-grid">
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🔍</div>
+              <h3 class="card-title">1. Поиск модулей</h3>
+              <p class="card-text">
+                Напишите в Telegram <code>.ghsearch погода</code> или <code>.ghsearch переводчик</code>, чтобы увидеть список плагинов в каталоге.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">⚡</div>
+              <h3 class="card-title">2. Установка в 1 клик</h3>
+              <p class="card-text">
+                Выполните <code>.ghinstall &lt;название&gt;</code>. Бот скачает код, установит нужные pip-пакеты и перезапустится, сохранив ваше сообщение.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">📁</div>
+              <h3 class="card-title">3. Установка из чата</h3>
+              <p class="card-text">
+                Если у вас собственный сервер (Self-host), просто ответьте на файл <code>plugin.py</code> командой <code>.install</code>.
+              </p>
+            </div>
+
+            <div class="fluent-card">
+              <div class="card-icon-wrapper">🗑️</div>
+              <h3 class="card-title">4. Простое удаление</h3>
+              <p class="card-text">
+                Чтобы удалить ненужный плагин, напишите <code>.uninstall &lt;имя_модуля&gt;</code>. Системные модули защищены от удаления.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 8: Interactive CLI Command Builder -->
+        <section class="section-block" id="generator">
+          <div class="section-tag">Раздел 8 • Инструмент</div>
+          <h2 class="section-title">Интерактивный генератор команды запуска</h2>
+          <p class="section-desc">
+            Настройте параметры запуска под ваши требования (выбор порта, прокси, режим безопасного хостинга <code>--host</code>) и получите готовую команду:
+          </p>
+
+          <div class="generator-container">
+            <div class="gen-grid">
+              <!-- Option: Debug -->
+              <div class="gen-option-card">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkDebug">
+                  <span>Режим отладки (--debug)</span>
+                </label>
+                <div class="gen-option-desc">
+                  Включает детальный вывод логов всех модулей в консоль.
+                </div>
+              </div>
+
+              <!-- Option: No Web -->
+              <div class="gen-option-card">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkNoWeb">
+                  <span>Без веб-интерфейса (--no-web)</span>
+                </label>
+                <div class="gen-option-desc">
+                  Использует только текстовый консольный ввод без поднятия HTTP-сервера.
+                </div>
+              </div>
+
+              <!-- Option: Custom Port -->
+              <div class="gen-option-card">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkCustomPort">
+                  <span>Свой порт Web-мастера (--port)</span>
+                </label>
+                <div class="gen-option-desc">
+                  Изменить дефолтный порт 8080.
+                </div>
+                <div class="gen-input-group">
+                  <input type="number" id="inputPort" placeholder="8080" value="8080">
+                </div>
+              </div>
+
+              <!-- Option: Host mode -->
+              <div class="gen-option-card" style="border-color: rgba(56, 189, 248, 0.4); background: rgba(2, 132, 199, 0.08);">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkHost">
+                  <span style="color: #38bdf8;">Режим хостинга (--host)</span>
+                </label>
+                <div class="gen-option-desc">
+                  Безопасный режим: отключает <code>.terminal</code> и локальный инсталлер для защиты хост-машины.
+                </div>
+              </div>
+
+              <!-- Option: Preload API -->
+              <div class="gen-option-card">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkPreloadApi">
+                  <span>Передать API ключи через CLI</span>
+                </label>
+                <div class="gen-option-desc">
+                  Установить app_id и hash_id сразу флагами.
+                </div>
+                <div class="gen-input-group" style="display: grid; gap: 0.5rem;">
+                  <input type="number" id="inputAppId" placeholder="App ID (цифры)">
+                  <input type="text" id="inputHashId" placeholder="API Hash (строка)">
+                </div>
+              </div>
+
+              <!-- Option: Proxy -->
+              <div class="gen-option-card">
+                <label class="gen-checkbox-label">
+                  <input type="checkbox" id="chkProxy">
+                  <span>Настроить Прокси</span>
+                </label>
+                <div class="gen-option-desc">
+                  Подключение через SOCKS5 / HTTP прокси.
+                </div>
+                <div class="gen-input-group" style="display: grid; gap: 0.5rem;">
+                  <select id="selectProxyProto">
+                    <option value="socks5">SOCKS5</option>
+                    <option value="http">HTTP</option>
+                    <option value="socks4">SOCKS4</option>
+                  </select>
+                  <input type="text" id="inputProxyIp" placeholder="IP (например: 127.0.0.1)">
+                  <input type="number" id="inputProxyPort" placeholder="Порт (например: 1080)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Result Box -->
+            <div class="gen-output-box">
+              <span class="gen-output-text" id="cliOutput">python3 userbot.py</span>
+              <button class="fluent-btn fluent-btn-primary" id="copyCliBtn" data-copy="python3 userbot.py" style="flex-shrink: 0;">
+                <span>📋</span> Скопировать команду
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 9: Autostart 24/7 (Systemd) -->
+        <section class="section-block" id="autostart">
+          <div class="section-tag">Раздел 9 • Сервер</div>
+          <h2 class="section-title">Настройка автозапуска 24/7 (Self-Host)</h2>
+          <p class="section-desc">
+            Если вы используете собственный Linux VPS, настройте службу <b>systemd</b>, чтобы бот работал непрерывно после закрытия SSH-сессии:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">/etc/systemd/system/userbot.service</span>
+              <button class="code-copy-btn" data-copy="[Unit]
+Description=UBTG Telegram Userbot Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/userbot-tg
+ExecStart=/usr/bin/python3 userbot.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target">
+                <span>📋</span> Скопировать
+              </button>
+            </div>
+            <div class="code-body">
+<pre><code><span class="code-keyword">[Unit]</span>
+Description=UBTG Telegram Userbot Service
+After=network.target
+
+<span class="code-keyword">[Service]</span>
+Type=simple
+User=root
+WorkingDirectory=/root/userbot-tg
+ExecStart=/usr/bin/python3 userbot.py
+Restart=always
+RestartSec=5
+
+<span class="code-keyword">[Install]</span>
+WantedBy=multi-user.target</code></pre>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">Активация службы</span>
+              <button class="code-copy-btn" data-copy="sudo systemctl daemon-reload
+sudo systemctl enable --now userbot
+sudo systemctl status userbot">
+                <span>📋</span> Скопировать
+              </button>
+            </div>
+            <div class="code-body">
+<pre><code><span class="code-comment"># Применяем конфигурацию и запускаем службу:</span>
+sudo systemctl daemon-reload
+sudo systemctl enable --now userbot
+
+<span class="code-comment"># Проверить статус службы:</span>
+sudo systemctl status userbot</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 10: FAQ -->
+        <section class="section-block" id="faq">
+          <div class="section-tag">Раздел 10 • Вопросы и ответы</div>
+          <h2 class="section-title">Часто задаваемые вопросы (FAQ)</h2>
+          <p class="section-desc">
+            Ответы на самые частые вопросы пользователей юзербота и сервиса хостинга:
+          </p>
+
+          <div class="faq-container">
+            <div class="faq-item active">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>☁️</span> В чём преимущество хостинга в @aswer_ubtg_host_bot?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  Бот <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; font-weight: 600;">@aswer_ubtg_host_bot</a> позволяет запустить юзербота без владения сервером и без ввода консольных команд. Вы просто сканируете QR-код в боте — и ваш юзербот уже работает 24/7. Также обновления ядра накатываются автоматически.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>🛡️</span> Почему на хостинге отключены команды .terminal и .install?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  На облачном хостинге активирован защитный флаг <code>--host</code>. Он блокирует выполнение произвольного shell-кода сервера и установку непроверенных скриптов из чата, защищая аккаунты пользователей и стабильность инфраструктуры. При этом все проверенные модули из официального каталога GitHub (<code>.ghinstall</code>) работают без ограничений!
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>🛡️</span> Могут ли заблокировать мой аккаунт за использование юзербота?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  В UBTG встроена надежная защита от спамбана: минимальный интервал между командами и автоматический перехват задержек <code>FloodWait</code>. При обычном использовании команд и полезных модулей риск бана минимален. Однако избегайте агрессивного спама и массовых рассылок по чужим чатам.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>🔄</span> Как обновить юзербот, когда выйдет новая версия?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  На собственном сервере напишите команду <code>.update now</code> в любом диалоге Telegram. Юзербот сам подтянет обновления из GitHub, обновит зависимости и мгновенно перезагрузится. На облачном хосте бот обновляется автоматически.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>🤖</span> Что делать, если бот-ассистент перестал отвечать на кнопки?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  Напишите команду <code>.resettoken</code>. Юзербот автоматически свяжется с @BotFather, сгенерирует новый токен бота, обновит конфигурацию и перезапустит процесс.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-header">
+                <span class="faq-question">
+                  <span>🔐</span> Где сохраняются мои данные и сессия?
+                </span>
+                <span class="faq-icon">▼</span>
+              </div>
+              <div class="faq-body">
+                <p class="faq-answer">
+                  При самостоятельной установке все файлы хранятся в вашей папке:
+                  <br>• <code>userbot.session</code> — авторизационная сессия Telegram.
+                  <br>• <code>core_conf.json</code> — API ключи и токен ассистента.
+                  <br>• <code>Global_config.json</code> — персональные настройки модулей.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Ready to Start CTA Section -->
+  <section class="footer-cta-section" id="get-started">
+    <div class="footer-cta-card">
+      <div class="footer-cta-header">
+        <div class="hero-badge-container" style="margin-bottom: 1rem;">
+          <span class="hero-badge-dot"></span>
+          <span class="hero-badge-text">Старт за пару кликов</span>
+        </div>
+        <h2 class="footer-cta-title">
+          Готовы начать работу с <span class="gradient-text">UBTG</span>?
+        </h2>
+        <p class="footer-cta-desc">
+          Выберите наиболее удобный способ: запустите юзербота за 1 минуту в облаке через Telegram-бота или настройте всё самостоятельно на своём сервере.
+        </p>
+      </div>
+
+      <div class="footer-cta-grid">
+        <!-- Option 1: Cloud Host -->
+        <div class="cta-choice-card cta-choice-cloud">
+          <div class="cta-choice-top">
+            <span class="cta-choice-badge badge-cloud-accent">⚡ Быстрый старт (1 минута)</span>
+            <h3 class="cta-choice-title">☁️ В Облаке</h3>
+            <p class="cta-choice-desc">
+              Автоматический подписочный хостинг 24/7. Вход по QR-коду прямо в боте без настройки Linux и Python.
+            </p>
+            <ul class="cta-choice-features">
+              <li><span>✓</span> Работает круглосуточно в фоне</li>
+              <li><span>✓</span> Защищённый режим <code>--host</code></li>
+              <li><span>✓</span> Доступен каталог <code>.ghinstall</code></li>
+            </ul>
+          </div>
+          <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" class="fluent-btn fluent-btn-cloud cta-btn-full">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
+            Запустить в Telegram (@aswer_ubtg_host_bot)
+          </a>
+        </div>
+
+        <!-- Option 2: Self-Host VPS -->
+        <div class="cta-choice-card cta-choice-vps">
+          <div class="cta-choice-top">
+            <span class="cta-choice-badge badge-vps-accent">🛠️ Полный контроль</span>
+            <h3 class="cta-choice-title">🖥️ На своём VPS / ПК</h3>
+            <p class="cta-choice-desc">
+              Самостоятельный запуск с открытым исходным кодом, личными API ключами и поддержкой всех модулей.
+            </p>
+            <ul class="cta-choice-features">
+              <li><span>✓</span> Бесплатно и с открытым кодом</li>
+              <li><span>✓</span> Доступны все команды (включая <code>.terminal</code>)</li>
+              <li><span>✓</span> Удобный Web-мастер настройки</li>
+            </ul>
+          </div>
+          <a href="#prerequisites" class="fluent-btn fluent-btn-primary cta-btn-full">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Перейти к инструкции по настройке
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fluent Footer -->
+  <footer class="fluent-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <div class="brand-icon" style="width: 32px; height: 32px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <span class="brand-title" style="font-size: 1.1rem;">UBTG Userbot</span>
+        </div>
+        <p>
+          Современный Telegram-юзербот с облачным хостингом в <a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" style="color: #38bdf8;">@aswer_ubtg_host_bot</a> и возможностью бесплатной самостоятельной установки.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Быстрые ссылки</h4>
+        <ul class="footer-links">
+          <li><a href="#cloud-host" style="color: #38bdf8; font-weight: 600;">☁️ Облачный Хост</a></li>
+          <li><a href="#prerequisites">Получить API Telegram</a></li>
+          <li><a href="#installation">Самостоятельная установка</a></li>
+          <li><a href="#commands">Справочник команд</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Инструменты</h4>
+        <ul class="footer-links">
+          <li><a href="#generator">Генератор CLI</a></li>
+          <li><a href="#modules">Каталог модулей</a></li>
+          <li><a href="#comparison">Сравнение тарифов</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ресурсы</h4>
+        <ul class="footer-links">
+          <li><a href="https://t.me/aswer_ubtg_host_bot" target="_blank" rel="noopener noreferrer" style="color: #38bdf8;">Telegram Бот Хостинга</a></li>
+          <li><a href="https://github.com/Artemon4ik8091/userbot-tg" target="_blank" rel="noopener noreferrer">GitHub Репозиторий</a></li>
+          <li><a href="https://my.telegram.org" target="_blank" rel="noopener noreferrer">Telegram API Portal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 UBTG Project. Разработано в современном Fluent 2 Design.</div>
+      <div>Сделано для пользователей с любовью ❤️</div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
