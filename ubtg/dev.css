@@ -1,0 +1,622 @@
+/* ==========================================================================
+   UBTG Developer Documentation Wiki Stylesheet (dev.css)
+   Strict, clean, modern dark IDE / GitBook technical style with complete mobile support
+   ========================================================================== */
+
+:root {
+  --dev-bg-base: #0d1117;
+  --dev-bg-surface: #161b22;
+  --dev-bg-subtle: #21262d;
+  --dev-border: #30363d;
+  --dev-border-active: #58a6ff;
+
+  --dev-text-main: #f0f6fc;
+  --dev-text-muted: #8b949e;
+  --dev-text-dim: #6e7681;
+
+  --dev-accent-blue: #58a6ff;
+  --dev-accent-green: #3fb950;
+  --dev-accent-purple: #bc8cff;
+  --dev-accent-orange: #d29922;
+  --dev-accent-red: #f85149;
+
+  --dev-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --dev-font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body.dev-body {
+  font-family: var(--dev-font-sans);
+  background-color: var(--dev-bg-base);
+  color: var(--dev-text-main);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+/* Верхняя панель */
+.dev-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(22, 27, 34, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--dev-border);
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.dev-header-inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dev-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dev-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dev-accent-blue);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(88, 166, 255, 0.1);
+  border: 1px solid rgba(88, 166, 255, 0.2);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dev-back-link:hover {
+  background: rgba(88, 166, 255, 0.2);
+  transform: translateX(-2px);
+}
+
+.dev-divider {
+  color: var(--dev-text-dim);
+  font-size: 1.1rem;
+}
+
+.dev-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dev-logo-badge {
+  background: #30363d;
+  color: #7ee787;
+  font-family: var(--dev-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.dev-logo-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--dev-text-main);
+  white-space: nowrap;
+}
+
+.dev-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dev-header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--dev-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--dev-border);
+  background: var(--dev-bg-surface);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dev-header-btn:hover {
+  color: var(--dev-text-main);
+  border-color: var(--dev-text-muted);
+}
+
+.dev-mobile-toggle {
+  display: none;
+  background: var(--dev-bg-surface);
+  border: 1px solid var(--dev-border);
+  color: var(--dev-text-main);
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+}
+
+/* Мобильный бэкдроп для оглавления */
+.dev-sidebar-backdrop {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 60px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 98;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dev-sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Лейаут: Сайдбар + Контент */
+.dev-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+/* Сайдбар */
+.dev-sidebar {
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  padding: 24px 16px;
+  border-right: 1px solid var(--dev-border);
+  background: var(--dev-bg-surface);
+  z-index: 99;
+}
+
+.dev-sidebar-search input {
+  width: 100%;
+  background: var(--dev-bg-base);
+  border: 1px solid var(--dev-border);
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: var(--dev-text-main);
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 20px;
+  transition: border-color 0.2s ease;
+}
+
+.dev-sidebar-search input:focus {
+  border-color: var(--dev-accent-blue);
+}
+
+.dev-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dev-nav-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dev-text-dim);
+  margin-bottom: 8px;
+  padding: 0 8px;
+}
+
+.dev-nav-link {
+  display: block;
+  text-decoration: none;
+  color: var(--dev-text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+  min-height: 38px;
+}
+
+.dev-nav-link:hover {
+  color: var(--dev-text-main);
+  background: var(--dev-bg-subtle);
+}
+
+.dev-nav-link.active {
+  color: var(--dev-accent-blue);
+  background: rgba(88, 166, 255, 0.12);
+  font-weight: 600;
+}
+
+/* Контент документации */
+.dev-content {
+  padding: 40px 60px 80px;
+  max-width: 960px;
+}
+
+.dev-article-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--dev-border);
+}
+
+.dev-article-badge {
+  display: inline-block;
+  font-family: var(--dev-font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--dev-accent-blue);
+  background: rgba(88, 166, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.dev-article-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+  line-height: 1.22;
+}
+
+.dev-article-subtitle {
+  font-size: 1.02rem;
+  color: var(--dev-text-muted);
+  line-height: 1.6;
+}
+
+/* Секции статей */
+.dev-section {
+  margin-bottom: 44px;
+}
+
+.dev-section h2 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  padding-top: 16px;
+  color: var(--dev-text-main);
+}
+
+.dev-section p {
+  color: #c9d1d9;
+  margin-bottom: 16px;
+  font-size: 0.98rem;
+}
+
+/* Инлайн-код ТОЛЬКО вне тегов <pre> */
+:not(pre) > code {
+  font-family: var(--dev-font-mono);
+  font-size: 0.88rem;
+  background: rgba(110, 118, 129, 0.2);
+  color: #79c0ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  word-break: break-word;
+}
+
+/* Списки */
+.dev-styled-list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #c9d1d9;
+}
+
+.dev-bullet-list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #c9d1d9;
+}
+
+/* Блоки кода (IDE Style) */
+.dev-code-block {
+  background: #090d13;
+  border: 1px solid var(--dev-border);
+  border-radius: 8px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.dev-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #161b22;
+  border-bottom: 1px solid var(--dev-border);
+}
+
+.code-badge {
+  font-family: var(--dev-font-mono);
+  font-size: 0.75rem;
+  color: var(--dev-text-dim);
+  text-transform: lowercase;
+}
+
+.dev-copy-btn {
+  background: #21262d;
+  border: 1px solid var(--dev-border);
+  color: var(--dev-text-muted);
+  font-size: 0.75rem;
+  font-family: inherit;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dev-copy-btn:hover {
+  color: var(--dev-text-main);
+  border-color: var(--dev-text-muted);
+}
+
+/* ВНУТРИ <pre> код и все спаны ВСЕГДА полностью прозрачные */
+.dev-code-block pre {
+  padding: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: var(--dev-font-mono);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #e6edf3;
+  background: transparent !important;
+  margin: 0;
+}
+
+.dev-code-block pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  display: block;
+}
+
+.dev-code-block pre code span {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Подсветка синтаксиса */
+.kw { color: #ff7b72; font-weight: 600; }
+.fn { color: #d2a8ff; }
+.str { color: #a5d6ff; }
+.cmt { color: #8b949e; font-style: italic; }
+.dec { color: #ffa657; }
+.num { color: #79c0ff; }
+
+/* Таблицы API */
+.dev-table-wrapper {
+  background: var(--dev-bg-surface);
+  border: 1px solid var(--dev-border);
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 20px 0;
+}
+
+.dev-table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.dev-table th, .dev-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--dev-border);
+}
+
+.dev-table th {
+  background: #1c2128;
+  color: var(--dev-text-main);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dev-table td:first-child code {
+  font-family: var(--dev-font-mono);
+  color: #79c0ff;
+  white-space: nowrap;
+}
+
+/* Выделенные блоки (Callouts) */
+.dev-callout {
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-left: 4px solid;
+  font-size: 0.92rem;
+}
+
+.dev-callout p {
+  margin: 0;
+  color: var(--dev-text-main);
+}
+
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dev-callout-info {
+  background: rgba(56, 139, 253, 0.1);
+  border-left-color: #58a6ff;
+}
+
+.dev-callout-warning {
+  background: rgba(187, 128, 9, 0.12);
+  border-left-color: #d29922;
+}
+
+/* Футер Вики */
+.dev-footer {
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid var(--dev-border);
+}
+
+.dev-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--dev-text-dim);
+}
+
+.dev-to-top {
+  color: var(--dev-accent-blue);
+  text-decoration: none;
+}
+
+.dev-to-top:hover {
+  text-decoration: underline;
+}
+
+/* Toast */
+.dev-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #238636;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(80px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 9999;
+}
+
+.dev-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Адаптивность (Mobile & Tablet)
+   ========================================================================== */
+@media (max-width: 960px) {
+  .dev-header-inner {
+    padding: 0 16px;
+  }
+
+  .dev-logo-title {
+    display: none;
+  }
+
+  .dev-header-btn span {
+    display: none;
+  }
+
+  .dev-header-btn {
+    padding: 6px 8px;
+  }
+
+  .dev-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dev-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 290px;
+    max-width: 85vw;
+    z-index: 99;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .dev-sidebar.active {
+    transform: translateX(0);
+  }
+
+  .dev-mobile-toggle {
+    display: flex;
+  }
+
+  .dev-content {
+    padding: 24px 16px 60px;
+  }
+
+  .dev-article-title {
+    font-size: 1.75rem;
+  }
+
+  .dev-section h2 {
+    font-size: 1.35rem;
+  }
+
+  .dev-code-block pre {
+    padding: 12px 14px;
+    font-size: 0.82rem;
+  }
+
+  .dev-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    text-align: center;
+  }
+}

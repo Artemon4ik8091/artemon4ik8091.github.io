@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UBTG Developer Docs — Документация и Вики для разработчиков модулей</title>
+  <meta name="description" content="Полная техническая документация и руководство по созданию модулей для Telegram юзербота UBTG. API ядра, Telethon, Inline-кнопки, фоновые задачи, конфиги и примеры." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dev.css" />
+</head>
+<body class="dev-body">
+  <!-- Верхняя строка навигации разработчика -->
+  <header class="dev-header">
+    <div class="dev-header-inner">
+      <div class="dev-header-left">
+        <a href="index.html" class="dev-back-link" title="Вернуться на главный сайт">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>На главную</span>
+        </a>
+        <div class="dev-divider">/</div>
+        <div class="dev-brand">
+          <span class="dev-logo-badge">DEV WIKI</span>
+          <span class="dev-logo-title">UBTG Core & Plugin API</span>
+        </div>
+      </div>
+
+      <div class="dev-header-right">
+        <a href="https://github.com/Artemon4ik8091/userbot-tg" target="_blank" rel="noopener" class="dev-header-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        <a href="https://gitea.com/aswer/ubtg-repo" target="_blank" rel="noopener" class="dev-header-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+          <span>Репозиторий модулей</span>
+        </a>
+        <button id="devMobileToggle" class="dev-mobile-toggle" aria-label="Открыть оглавление">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dev-sidebar-backdrop" id="devSidebarBackdrop"></div>
+
+  <div class="dev-layout">
+    <!-- Боковое меню документации (Sidebar) -->
+    <aside class="dev-sidebar" id="devSidebar">
+      <div class="dev-sidebar-search">
+        <input type="text" id="devSearchInput" placeholder="Поиск по документации..." />
+      </div>
+
+      <nav class="dev-nav">
+        <div class="dev-nav-section">
+          <div class="dev-nav-title">Введение & Архитектура</div>
+          <a href="#arch" class="dev-nav-link active">1. Структура и файлы</a>
+          <a href="#lifecycle" class="dev-nav-link">2. Жизненный цикл ядра</a>
+        </div>
+
+        <div class="dev-nav-section">
+          <div class="dev-nav-title">Разработка модулей</div>
+          <a href="#meta" class="dev-nav-link">3. Метаданные (set_module_meta)</a>
+          <a href="#commands" class="dev-nav-link">4. Создание команд (@register_cmd)</a>
+          <a href="#requires" class="dev-nav-link">5. Авто-установка зависимостей</a>
+          <a href="#inline-api" class="dev-nav-link">6. Inline API и кнопки бота</a>
+          <a href="#background" class="dev-nav-link">7. Фоновые таски (@register_bg)</a>
+          <a href="#config" class="dev-nav-link">8. Система Global_config</a>
+        </div>
+
+        <div class="dev-nav-section">
+          <div class="dev-nav-title">Продвинутый API</div>
+          <a href="#telethon-ref" class="dev-nav-link">9. Telethon Cheat Sheet</a>
+          <a href="#restart-api" class="dev-nav-link">10. Рестарт с контекстом</a>
+          <a href="#flood-limit" class="dev-nav-link">11. Rate Limiter и Защита</a>
+          <a href="#examples" class="dev-nav-link">12. Полный пример плагина</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Основной контент Вики -->
+    <main class="dev-content">
+      <div class="dev-article-header">
+        <div class="dev-article-badge">UBTG Plugin API v2.0</div>
+        <h1 class="dev-article-title">Руководство разработчика модулей</h1>
+        <p class="dev-article-subtitle">
+          Архитектура UBTG построена на независимых плагинах. Вам <b>никогда не требуется модифицировать ядро (userbot.py)</b>. 
+          Создайте файл <code>.py</code>, используйте реестр <code>registry.py</code>, и установщик автоматически подхватит его, скачав все нужные зависимости.
+        </p>
+      </div>
+
+      <!-- Раздел 1: Архитектура -->
+      <section id="arch" class="dev-section">
+        <h2>1. Архитектура и расположение файлов</h2>
+        <p>Модули и компоненты юзербота разделены по директориям в зависимости от их назначения:</p>
+
+        <div class="dev-table-wrapper">
+          <table class="dev-table">
+            <thead>
+              <tr>
+                <th>Директория / Файл</th>
+                <th>Назначение</th>
+                <th>Особенности</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>modules/</code></td>
+                <td>Пользовательские модули</td>
+                <td>Устанавливаются через <code>.install</code> или <code>.ghinstall</code>. Можно свободно удалять через <code>.uninstall</code>.</td>
+              </tr>
+              <tr>
+                <td><code>system_modules/</code></td>
+                <td>Системные модули ядра 🔒</td>
+                <td>Любой файл в этой папке автоматически помечается <code>system=True</code>. Защищен от удаления пользователем.</td>
+              </tr>
+              <tr>
+                <td><code>init_modules/</code></td>
+                <td>Pre-Auth модули инициализации</td>
+                <td>Выполняются до авторизации Telegram клиента (веб-мастер авторизации QR/Web, настройка прокси).</td>
+              </tr>
+              <tr>
+                <td><code>registry.py</code></td>
+                <td>Центральный реестр модулей</td>
+                <td>Экспортирует декораторы <code>@register_cmd</code>, <code>@register_bg</code>, <code>@register_callback</code>, функции <code>send_inline</code>, <code>get_config</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout dev-callout-info">
+          <div class="callout-title">💡 Режим хостинга (--host)</div>
+          <p>При запуске с флагом <code>--host</code> юзербот в целях безопасности отключает модули локального терминала (<code>terminal.py</code>) и ручного установщика файлов.</p>
+        </div>
+      </section>
+
+      <!-- Раздел 2: Жизненный цикл -->
+      <section id="lifecycle" class="dev-section">
+        <h2>2. Жизненный цикл ядра</h2>
+        <ol class="dev-styled-list">
+          <li><strong>Pre-Auth Wizard:</strong> Сбор конфигурации через Веб-интерфейс или консоль (API ID/Hash, QR-логин).</li>
+          <li><strong>Инициализация Telethon:</strong> Авторизация в Telegram и запуск фонового Event Loop.</li>
+          <li><strong>Инициализация встроенного Telegram-бота:</strong> Создание бота через <code>@BotFather</code>, включение Inline-режима и сохранение токена в <code>core_conf.json</code>.</li>
+          <li><strong>Динамическая загрузка плагинов:</strong> Сканирование <code>system_modules/</code> и <code>modules/</code>, валидация синтаксиса и регистрация команд.</li>
+          <li><strong>Запуск фоновых тасок:</strong> Старт всех корутин, зарегистрированных через <code>@register_bg()</code>.</li>
+        </ol>
+      </section>
+
+      <!-- Раздел 3: Метаданные -->
+      <section id="meta" class="dev-section">
+        <h2>3. Метаданные модуля (set_module_meta)</h2>
+        <p>Для корректного отображения в команде <code>.help</code> и управления правами модуль должен задать метаданные в начале файла:</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python</span>
+            <button class="dev-copy-btn" data-copy="from registry import set_module_meta, register_cmd
+
+set_module_meta(
+    name=&quot;Мой Модуль&quot;,
+    desc=&quot;Описание функций плагина для справки .help&quot;,
+    system=False  # True защитит модуль от удаления через .uninstall
+)">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">from</span> registry <span class="kw">import</span> set_module_meta, register_cmd
+
+set_module_meta(
+    name=<span class="str">"Мой Модуль"</span>,
+    desc=<span class="str">"Описание функций плагина для справки .help"</span>,
+    system=<span class="kw">False</span>  <span class="cmt"># True защитит модуль от удаления через .uninstall</span>
+)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 4: Создание команд -->
+      <section id="commands" class="dev-section">
+        <h2>4. Создание команд (@register_cmd)</h2>
+        <p>Команды вызываются префиксом <code>.</code> (точка). Функция команды <b>обязательно</b> должна быть асинхронной (<code>async def</code>) и принимать ровно 3 аргумента:</p>
+
+        <div class="dev-table-wrapper">
+          <table class="dev-table">
+            <thead>
+              <tr>
+                <th>Аргумент</th>
+                <th>Тип</th>
+                <th>Описание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>client</code></td>
+                <td><code>TelegramClient</code></td>
+                <td>Экземпляр клиента Telethon. Доступ ко всем методам API Telegram.</td>
+              </tr>
+              <tr>
+                <td><code>event</code></td>
+                <td><code>events.NewMessage.Event</code></td>
+                <td>Событие вашего отправленного сообщения.</td>
+              </tr>
+              <tr>
+                <td><code>args</code></td>
+                <td><code>str</code></td>
+                <td>Строка текста, переданная после команды (без префикса и имени команды).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python</span>
+            <button class="dev-copy-btn" data-copy="@register_cmd(&quot;say&quot;, desc=&quot;Печатает текст от твоего имени. Юзай: .say &lt;текст&gt;&quot;)
+async def say_cmd(client, event, args):
+    if not args:
+        return await event.edit(&quot;❌ Укажи текст: `.say Привет`&quot;)
+    
+    # event.edit() заменяет текст команды
+    await event.edit(f&quot;🗣 {args}&quot;)">Скопировать</button>
+          </div>
+          <pre><code><span class="dec">@register_cmd</span>(<span class="str">"say"</span>, desc=<span class="str">"Печатает текст от твоего имени. Юзай: .say &lt;текст&gt;"</span>)
+<span class="kw">async def</span> <span class="fn">say_cmd</span>(client, event, args):
+    <span class="kw">if not</span> args:
+        <span class="kw">return await</span> event.edit(<span class="str">"❌ Укажи текст: `.say Привет`"</span>)
+    
+    <span class="cmt"># event.edit() редактирует исходное сообщение</span>
+    <span class="kw">await</span> event.edit(<span class="str">f"🗣 {args}"</span>)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 5: Авто-установка зависимостей -->
+      <section id="requires" class="dev-section">
+        <h2>5. Зависимости и автоустановка библиотек</h2>
+        <p>Если вашему модулю требуются сторонние пакеты PyPI (например <code>requests</code>, <code>Pillow</code>, <code>aiohttp</code>), укажите в начале файла специальную директиву:</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python</span>
+            <button class="dev-copy-btn" data-copy="# requires: requests pillow bs4">Скопировать</button>
+          </div>
+          <pre><code><span class="cmt"># requires: requests pillow bs4</span></code></pre>
+        </div>
+
+        <p>Встроенный установщик (<code>gh_installer.py</code> / <code>installer.py</code>):</p>
+        <ul class="dev-bullet-list">
+          <li>Автоматически парсит комментарий <code># requires:</code>.</li>
+          <li>Вызывает <code>pip install</code> в фоновом подпроцессе.</li>
+          <li>Перехватывает <code>ModuleNotFoundError</code> при динамическом импорте и докачивает недостающие библиотеки на лету.</li>
+          <li>Бесшовно перезагружает ядро для применения в чистом контексте памяти.</li>
+        </ul>
+      </section>
+
+      <!-- Раздел 6: Inline API и Кнопки -->
+      <section id="inline-api" class="dev-section">
+        <h2>6. Разработка с Inline-кнопками ядра</h2>
+        <p>
+          Встроенный Telegram-бот ядра позволяет отправлять сообщения с интерактивными инлайн-кнопками прямо от вашего лица в любые группы и чаты.
+        </p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python (Инлайн кнопки)</span>
+            <button class="dev-copy-btn" data-copy="from telethon import Button, errors
+from registry import register_cmd, register_callback, send_inline
+
+@register_cmd(&quot;menu&quot;, desc=&quot;Открыть интерактивное меню&quot;)
+async def menu_cmd(client, event, args):
+    buttons = [
+        [
+            Button.inline(&quot;🔥 Кнопка 1&quot;, b&quot;mymod_btn1&quot;),
+            Button.inline(&quot;⚙️ Кнопка 2&quot;, b&quot;mymod_btn2&quot;)
+        ],
+        [Button.inline(&quot;❌ Закрыть&quot;, b&quot;mymod_close&quot;)]
+    ]
+    
+    await send_inline(
+        client=client,
+        chat_id=event.chat_id,
+        text=&quot;🌟 **Интерактивное меню плагина**\nВыберите действие:&quot;,
+        buttons=buttons,
+        reply_to=event.reply_to_msg_id
+    )
+    await event.delete()
+
+@register_callback(&quot;mymod_btn1&quot;)
+async def on_btn1(event, data):
+    await event.answer(&quot;Нажата кнопка 1!&quot;, alert=True)
+
+@register_callback(&quot;mymod_close&quot;)
+async def on_close(event, data):
+    await event.delete()">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">from</span> telethon <span class="kw">import</span> Button, errors
+<span class="kw">from</span> registry <span class="kw">import</span> register_cmd, register_callback, send_inline
+
+<span class="dec">@register_cmd</span>(<span class="str">"menu"</span>, desc=<span class="str">"Открыть интерактивное меню"</span>)
+<span class="kw">async def</span> <span class="fn">menu_cmd</span>(client, event, args):
+    buttons = [
+        [
+            Button.inline(<span class="str">"🔥 Кнопка 1"</span>, <span class="str">b"mymod_btn1"</span>),
+            Button.inline(<span class="str">"⚙️ Кнопка 2"</span>, <span class="str">b"mymod_btn2"</span>)
+        ],
+        [Button.inline(<span class="str">"❌ Закрыть"</span>, <span class="str">b"mymod_close"</span>)]
+    ]
+    
+    <span class="kw">await</span> send_inline(
+        client=client,
+        chat_id=event.chat_id,
+        text=<span class="str">"🌟 **Интерактивное меню плагина**\nВыберите действие:"</span>,
+        buttons=buttons,
+        reply_to=event.reply_to_msg_id
+    )
+    <span class="kw">await</span> event.delete()
+
+<span class="dec">@register_callback</span>(<span class="str">"mymod_btn1"</span>)
+<span class="kw">async def</span> <span class="fn">on_btn1</span>(event, data):
+    <span class="kw">await</span> event.answer(<span class="str">"Нажата кнопка 1!"</span>, alert=<span class="kw">True</span>)
+
+<span class="dec">@register_callback</span>(<span class="str">"mymod_close"</span>)
+<span class="kw">async def</span> <span class="fn">on_close</span>(event, data):
+    <span class="kw">await</span> event.delete()</code></pre>
+        </div>
+
+        <div class="dev-callout dev-callout-warning">
+          <div class="callout-title">⚠️ Защита от MessageNotModifiedError</div>
+          <p>При редактировании инлайн-сообщения (<code>await event.edit(...)</code>) всегда оборачивайте вызов в <code>try...except errors.MessageNotModifiedError: await event.answer()</code>, если содержимое сообщения может не измениться.</p>
+        </div>
+      </section>
+
+      <!-- Раздел 7: Фоновые таски -->
+      <section id="background" class="dev-section">
+        <h2>7. Фоновые процессы (@register_bg)</h2>
+        <p>Используются для авто-статусов, чекеров и таймеров. Запускаются асинхронно параллельно ядру.</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python (Background loop)</span>
+            <button class="dev-copy-btn" data-copy="import asyncio
+from registry import register_bg
+
+@register_bg()
+async def my_background_task(client):
+    while True:
+        try:
+            # Ваша фоновая логика здесь
+            pass
+        except Exception as e:
+            print(f&quot;[MyMod BG Error]: {e}&quot;)
+        
+        # ОБЯЗАТЕЛЬНО: асинхронный сон! Никаких time.sleep()!
+        await asyncio.sleep(60)">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">import</span> asyncio
+<span class="kw">from</span> registry <span class="kw">import</span> register_bg
+
+<span class="dec">@register_bg</span>()
+<span class="kw">async def</span> <span class="fn">my_background_task</span>(client):
+    <span class="kw">while True</span>:
+        <span class="kw">try</span>:
+            <span class="cmt"># Ваша фоновая логика здесь</span>
+            <span class="kw">pass</span>
+        <span class="kw">except</span> Exception <span class="kw">as</span> e:
+            print(<span class="str">f"[MyMod BG Error]: {e}"</span>)
+        
+        <span class="cmt"># ОБЯЗАТЕЛЬНО: асинхронный сон! Никаких time.sleep()!</span>
+        <span class="kw">await</span> asyncio.sleep(<span class="num">60</span>)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 8: Конфигурации -->
+      <section id="config" class="dev-section">
+        <h2>8. Система Global_config и команда .cfg</h2>
+        <p>Позволяет сохранять настройки модуля в единый <code>Global_config.json</code> и управлять ими через команду <code>.cfg set</code>.</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python (Config API)</span>
+            <button class="dev-copy-btn" data-copy="from registry import init_config, get_config, set_config
+
+# Инициализация дефолтов в начале файла
+init_config(__name__, {
+    &quot;delay&quot;: 5,
+    &quot;reply_text&quot;: &quot;Привет!&quot;,
+    &quot;auto_delete&quot;: True
+})
+
+@register_cmd(&quot;checkcfg&quot;, desc=&quot;Проверить значение конфига&quot;)
+async def check_cfg_cmd(client, event, args):
+    delay = get_config(__name__, &quot;delay&quot;, 5)
+    text = get_config(__name__, &quot;reply_text&quot;, &quot;Default&quot;)
+    await event.edit(f&quot;Задержка: {delay} сек, Текст: {text}&quot;)">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">from</span> registry <span class="kw">import</span> init_config, get_config, set_config
+
+<span class="cmt"># Инициализация дефолтов в начале файла</span>
+init_config(__name__, {
+    <span class="str">"delay"</span>: <span class="num">5</span>,
+    <span class="str">"reply_text"</span>: <span class="str">"Привет!"</span>,
+    <span class="str">"auto_delete"</span>: <span class="kw">True</span>
+})
+
+<span class="dec">@register_cmd</span>(<span class="str">"checkcfg"</span>, desc=<span class="str">"Проверить значение конфига"</span>)
+<span class="kw">async def</span> <span class="fn">check_cfg_cmd</span>(client, event, args):
+    delay = get_config(__name__, <span class="str">"delay"</span>, <span class="num">5</span>)
+    text = get_config(__name__, <span class="str">"reply_text"</span>, <span class="str">"Default"</span>)
+    <span class="kw">await</span> event.edit(<span class="str">f"Задержка: {delay} сек, Текст: {text}"</span>)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 9: Telethon Cheat Sheet -->
+      <section id="telethon-ref" class="dev-section">
+        <h2>9. Шпаргалка по Telethon в обработчиках</h2>
+        <div class="dev-table-wrapper">
+          <table class="dev-table">
+            <thead>
+              <tr>
+                <th>Действие</th>
+                <th>Метод Telethon</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Изменить текущее сообщение</td>
+                <td><code>await event.edit("Новый текст")</code></td>
+              </tr>
+              <tr>
+                <td>Удалить команду</td>
+                <td><code>await event.delete()</code></td>
+              </tr>
+              <tr>
+                <td>Отправить новое сообщение следом</td>
+                <td><code>await event.respond("Текст")</code></td>
+              </tr>
+              <tr>
+                <td>Получить реплай на чужое сообщение</td>
+                <td><code>reply = await event.get_reply_message()</code></td>
+              </tr>
+              <tr>
+                <td>Скачать медиа/файл из реплая</td>
+                <td><code>path = await reply.download_media(file="downloads/")</code></td>
+              </tr>
+              <tr>
+                <td>Отправить файл / фото в чат</td>
+                <td><code>await client.send_file(event.chat_id, "file.jpg", caption="...")</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Раздел 10: Рестарт -->
+      <section id="restart-api" class="dev-section">
+        <h2>10. Бесшовная перезагрузка (restart_userbot)</h2>
+        <p>Если модуль изменил системные параметры ядра или скачал новые библиотеки, вызовите <code>restart_userbot</code>:</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python</span>
+            <button class="dev-copy-btn" data-copy="from registry import restart_userbot
+
+await restart_userbot(
+    client=client,
+    chat_id=event.chat_id,
+    message_id=event.id,
+    custom_text=&quot;🎉 **Модуль успешно применил настройки и перезапущен!**&quot;
+)">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">from</span> registry <span class="kw">import</span> restart_userbot
+
+<span class="kw">await</span> restart_userbot(
+    client=client,
+    chat_id=event.chat_id,
+    message_id=event.id,
+    custom_text=<span class="str">"🎉 **Модуль успешно применил настройки и перезапущен!**"</span>
+)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 11: Rate Limiter -->
+      <section id="flood-limit" class="dev-section">
+        <h2>11. Защита от спамбана и Rate Limiter</h2>
+        <ul class="dev-bullet-list">
+          <li><strong>0.3 секунды</strong> — минимальный интервал между параллельными вызовами команд ядра.</li>
+          <li><strong>FloodWaitError Handling</strong> — ядро перехватывает таймауты от серверов Telegram и отправляет сервисное уведомление в ЛС владельца через функцию <code>send_bot_notification()</code>.</li>
+        </ul>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python</span>
+            <button class="dev-copy-btn" data-copy="from registry import send_bot_notification
+
+# Отправит уведомление владельцу в ЛС через личного бота ядра
+await send_bot_notification(&quot;⚠️ **Событие в модуле:** Задача успешно завершена!&quot;)">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">from</span> registry <span class="kw">import</span> send_bot_notification
+
+<span class="cmt"># Отправит уведомление владельцу в ЛС через личного бота ядра</span>
+<span class="kw">await</span> send_bot_notification(<span class="str">"⚠️ **Событие в модуле:** Задача успешно завершена!"</span>)</code></pre>
+        </div>
+      </section>
+
+      <!-- Раздел 12: Полный пример плагина -->
+      <section id="examples" class="dev-section">
+        <h2>12. Полный пример готового модуля</h2>
+        <p>Готовый к установке файл <code>module_counter.py</code> с инлайн-кнопками и обработкой кликов:</p>
+
+        <div class="dev-code-block">
+          <div class="dev-code-header">
+            <span class="code-badge">python (module_counter.py)</span>
+            <button class="dev-copy-btn" data-copy="import time
+from telethon import Button, errors
+from registry import register_cmd, set_module_meta, send_inline, register_callback
+
+set_module_meta(&quot;Счетчик&quot;, &quot;Интерактивный инлайн-счетчик с кнопками&quot;)
+
+counters = {}
+
+@register_cmd(&quot;counter&quot;, desc=&quot;Запустить инлайн-счетчик&quot;)
+async def counter_cmd(client, event, args):
+    cid = f&quot;c{int(time.time() * 1000)}&quot;
+    counters[cid] = 0
+
+    buttons = [
+        [
+            Button.inline(&quot;➖ Минус&quot;, f&quot;cnt_dec_{cid}&quot;.encode()),
+            Button.inline(&quot;➕ Плюс&quot;, f&quot;cnt_inc_{cid}&quot;.encode())
+        ],
+        [Button.inline(&quot;🔄 Сброс&quot;, f&quot;cnt_reset_{cid}&quot;.encode())]
+    ]
+
+    await send_inline(
+        client,
+        event.chat_id,
+        &quot;🔢 **Инлайн Счетчик**\n\nТекущее значение: `0`&quot;,
+        buttons=buttons,
+        reply_to=event.reply_to_msg_id
+    )
+    await event.delete()
+
+@register_callback(&quot;cnt_inc_&quot;)
+async def on_inc(event, data):
+    cid = data.replace(&quot;cnt_inc_&quot;, &quot;&quot;)
+    if cid in counters:
+        counters[cid] += 1
+        await _update_ui(event, cid)
+
+@register_callback(&quot;cnt_dec_&quot;)
+async def on_dec(event, data):
+    cid = data.replace(&quot;cnt_dec_&quot;, &quot;&quot;)
+    if cid in counters:
+        counters[cid] -= 1
+        await _update_ui(event, cid)
+
+@register_callback(&quot;cnt_reset_&quot;)
+async def on_reset(event, data):
+    cid = data.replace(&quot;cnt_reset_&quot;, &quot;&quot;)
+    if cid in counters:
+        counters[cid] = 0
+        await _update_ui(event, cid)
+
+async def _update_ui(event, cid):
+    val = counters[cid]
+    buttons = [
+        [
+            Button.inline(&quot;➖ Минус&quot;, f&quot;cnt_dec_{cid}&quot;.encode()),
+            Button.inline(&quot;➕ Плюс&quot;, f&quot;cnt_inc_{cid}&quot;.encode())
+        ],
+        [Button.inline(&quot;🔄 Сброс&quot;, f&quot;cnt_reset_{cid}&quot;.encode())]
+    ]
+    try:
+        await event.edit(f&quot;🔢 **Инлайн Счетчик**\n\nТекущее значение: `{val}`&quot;, buttons=buttons)
+    except errors.MessageNotModifiedError:
+        await event.answer()">Скопировать</button>
+          </div>
+          <pre><code><span class="kw">import</span> time
+<span class="kw">from</span> telethon <span class="kw">import</span> Button, errors
+<span class="kw">from</span> registry <span class="kw">import</span> register_cmd, set_module_meta, send_inline, register_callback
+
+set_module_meta(<span class="str">"Счетчик"</span>, <span class="str">"Интерактивный инлайн-счетчик с кнопками"</span>)
+
+counters = {}
+
+<span class="dec">@register_cmd</span>(<span class="str">"counter"</span>, desc=<span class="str">"Запустить инлайн-счетчик"</span>)
+<span class="kw">async def</span> <span class="fn">counter_cmd</span>(client, event, args):
+    cid = <span class="str">f"c{int(time.time() * 1000)}"</span>
+    counters[cid] = <span class="num">0</span>
+
+    buttons = [
+        [
+            Button.inline(<span class="str">"➖ Минус"</span>, <span class="str">f"cnt_dec_{cid}"</span>.encode()),
+            Button.inline(<span class="str">"➕ Плюс"</span>, <span class="str">f"cnt_inc_{cid}"</span>.encode())
+        ],
+        [Button.inline(<span class="str">"🔄 Сброс"</span>, <span class="str">f"cnt_reset_{cid}"</span>.encode())]
+    ]
+
+    <span class="kw">await</span> send_inline(
+        client,
+        event.chat_id,
+        <span class="str">"🔢 **Инлайн Счетчик**\n\nТекущее значение: `0`"</span>,
+        buttons=buttons,
+        reply_to=event.reply_to_msg_id
+    )
+    <span class="kw">await</span> event.delete()
+
+<span class="dec">@register_callback</span>(<span class="str">"cnt_inc_"</span>)
+<span class="kw">async def</span> <span class="fn">on_inc</span>(event, data):
+    cid = data.replace(<span class="str">"cnt_inc_"</span>, <span class="str">""</span>)
+    <span class="kw">if</span> cid <span class="kw">in</span> counters:
+        counters[cid] += <span class="num">1</span>
+        <span class="kw">await</span> _update_ui(event, cid)
+
+<span class="dec">@register_callback</span>(<span class="str">"cnt_dec_"</span>)
+<span class="kw">async def</span> <span class="fn">on_dec</span>(event, data):
+    cid = data.replace(<span class="str">"cnt_dec_"</span>, <span class="str">""</span>)
+    <span class="kw">if</span> cid <span class="kw">in</span> counters:
+        counters[cid] -= <span class="num">1</span>
+        <span class="kw">await</span> _update_ui(event, cid)
+
+<span class="dec">@register_callback</span>(<span class="str">"cnt_reset_"</span>)
+<span class="kw">async def</span> <span class="fn">on_reset</span>(event, data):
+    cid = data.replace(<span class="str">"cnt_reset_"</span>, <span class="str">""</span>)
+    <span class="kw">if</span> cid <span class="kw">in</span> counters:
+        counters[cid] = <span class="num">0</span>
+        <span class="kw">await</span> _update_ui(event, cid)
+
+<span class="kw">async def</span> <span class="fn">_update_ui</span>(event, cid):
+    val = counters[cid]
+    buttons = [
+        [
+            Button.inline(<span class="str">"➖ Минус"</span>, <span class="str">f"cnt_dec_{cid}"</span>.encode()),
+            Button.inline(<span class="str">"➕ Плюс"</span>, <span class="str">f"cnt_inc_{cid}"</span>.encode())
+        ],
+        [Button.inline(<span class="str">"🔄 Сброс"</span>, <span class="str">f"cnt_reset_{cid}"</span>.encode())]
+    ]
+    <span class="kw">try</span>:
+        <span class="kw">await</span> event.edit(<span class="str">f"🔢 **Инлайн Счетчик**\n\nТекущее значение: `{val}`"</span>, buttons=buttons)
+    <span class="kw">except</span> errors.MessageNotModifiedError:
+        <span class="kw">await</span> event.answer()</code></pre>
+        </div>
+      </section>
+
+      <!-- Футер документации -->
+      <footer class="dev-footer">
+        <div class="dev-footer-inner">
+          <p>UBTG Developer Documentation • Лицензия MIT</p>
+          <a href="#arch" class="dev-to-top">Наверх ↑</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div id="devToast" class="dev-toast">Код скопирован в буфер!</div>
+
+  <script src="dev.js"></script>
+</body>
+</html>
