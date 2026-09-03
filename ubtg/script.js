@@ -1,6 +1,6 @@
 /**
  * UBTG Userbot - Интерактивный функционал обучающего сайта для новичков & Облачного Хостинга
- * Включает полную витрину топовых модулей (Nekospy, TicTacToe, AFK, ChatManager, AutoFarm, Compliments и др.)
+ * Включает полную витрину топовых модулей (Nekospy, Gemini AI, TicTacToe, AFK, ChatManager, AutoFarm, Compliments и др.)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   initCopyButtons();
   initScrollSpy();
+  initCardReveal();
+  initMouseGlow();
 });
 
 /* ==========================================================================
@@ -58,6 +60,26 @@ const COMMANDS_DATA = [
     desc: "Шпионский модуль Nekospy: перехватывает и сохраняет сгорающие фото/видео (TTL) в Избранное и отслеживает удаленные сообщения в ЛС! (Установка: .ghinstall nekospy)",
     usage: ".onetime (вкл/выкл) | Установка: .ghinstall nekospy",
     example: ".onetime"
+  },
+  {
+    name: ".gemini",
+    aliases: [".ai", ".gemini_model", ".gemini_models", ".gemini_setup"],
+    category: "top",
+    categoryName: "🧠 Gemini AI",
+    badgeClass: "badge-ai",
+    desc: "Флагманский искусственный интеллект Google Gemini: ответы на любые вопросы (.ai), анализ фото по реплаю (решение задач, перевод, код), память диалога и прокси. (Установка: .ghinstall gemini)",
+    usage: ".gemini <текст> | .ai <текст> | (реплай на фото) | Установка: .ghinstall gemini",
+    example: ".gemini Объясни устройство нейросетей простыми словами"
+  },
+  {
+    name: ".gemini_rules",
+    aliases: [".gemini_key", ".gemini_temp", ".gemini_history", ".gemini_clear"],
+    category: "top",
+    categoryName: "🧠 Gemini AI",
+    badgeClass: "badge-config",
+    desc: "Кастомизация поведения Gemini AI: системный промпт (.gemini_rules <роль> или реплаем), API-ключ (.gemini_key), переключение моделей (.gemini_model) и очистка истории диалога (.gemini_clear).",
+    usage: ".gemini_rules <промпт> | .gemini_rules clear",
+    example: ".gemini_rules Ты опытный Python разработчик, отвечай кратко"
   },
   {
     name: ".ttt",
@@ -315,6 +337,9 @@ function renderCommands(commands) {
       copyToClipboard(text);
     });
   });
+
+  // Применяем динамическое свечение курсора мыши для карточек команд
+  initMouseGlow();
 }
 
 /* ==========================================================================
@@ -463,6 +488,49 @@ function initSimulator() {
         ℹ️ <i>Все сгорающие фото/видео и удаленные собеседником сообщения автоматически сохраняются в Избранное!</i>
       `;
     }
+    // 2. GEMINI AI
+    else if (cmd.startsWith('.gemini') || cmd.startsWith('.ai')) {
+      const query = rawCmd.replace(/^\.(gemini|ai)\s*/i, '').trim();
+      const question = query || "Расскажи интересный факт о космосе";
+      let answer = "";
+      
+      if (question.toLowerCase().includes("факт") || question.toLowerCase().includes("космос")) {
+        answer = "🌌 <b>Космический факт:</b> Один день на Венере длится дольше, чем целый венерианский год! Планета совершает один оборот вокруг своей оси за 243 земных дня, а вокруг Солнца обращается за 225 дней.";
+      } else if (question.toLowerCase().includes("код") || question.toLowerCase().includes("python")) {
+        answer = "💻 <b>Код на Python:</b><br><pre><code>async def ask_gemini(prompt):\n    # Прямой запрос к Google Gemini AI\n    return await gemini.generate_content(prompt)\nprint('Готово! 🚀')</code></pre>";
+      } else {
+        answer = `✨ Я успешно обработал твой запрос <i>«${escapeHtml(question)}»</i> через модель <b>gemini-2.5-flash</b>!<br><br>Я умею анализировать фото по реплаю (решать уравнения, объяснять мемы, переводить текст), поддерживать связную нить диалога с памятью контекста и работать по твоим правилам <code>.gemini_rules</code>.`;
+      }
+
+      textEl.innerHTML = `
+        🧠 <b>Google Gemini AI</b> <i>(gemini-2.5-flash)</i>:<br><br>
+        ${answer}<br><br>
+        <div class="tg-inline-keyboard">
+          <div class="tg-btn-row">
+            <button class="tg-inline-btn" style="font-size:0.75rem;">⚡ gemini-2.5-flash</button>
+            <button class="tg-inline-btn" style="font-size:0.75rem;">🧠 Память: Вкл</button>
+          </div>
+          <div class="tg-btn-row">
+            <button class="tg-inline-btn" style="font-size:0.75rem;">🎭 Правила: <code>.gemini_rules</code></button>
+          </div>
+        </div>
+      `;
+    }
+    else if (cmd.startsWith('.gemini_rules')) {
+      const rules = rawCmd.replace(/^\.gemini_rules\s*/i, '').trim();
+      if (!rules || rules.toLowerCase() === 'clear') {
+        textEl.innerHTML = `
+          🎭 <b>Системные правила Gemini сброшены!</b><br>
+          Теперь модель отвечает в стандартном режиме ассистента.
+        `;
+      } else {
+        textEl.innerHTML = `
+          🎭 <b>Установлены новые правила для Gemini AI:</b><br>
+          <i>«${escapeHtml(rules)}»</i><br><br>
+          ✅ <i>Теперь нейросеть будет строго отыгрывать эту роль во всех ответах!</i>
+        `;
+      }
+    }
     // 2. TICTACTOE
     else if (cmd === '.ttt' || cmd === '.tictactoe') {
       textEl.innerHTML = `
@@ -555,6 +623,7 @@ function initSimulator() {
       textEl.innerHTML = `
         <b>🤖 Список установленных модулей:</b><br><br>
         • 🔥 <b>Nekospy</b> (<code>.onetime</code>, <code>.pmspy</code>)<br>
+        • 🧠 <b>Google Gemini AI</b> (<code>.gemini</code>, <code>.ai</code>, <code>.gemini_rules</code>)<br>
         • 🎮 <b>TicTacToe</b> (<code>.ttt</code>)<br>
         • 💤 <b>AFK</b> (<code>.afk</code>, <code>.unafk</code>)<br>
         • 🛡️ <b>Chat Manager</b> (<code>.mute</code>, <code>.ban</code>, <code>.purge</code>)<br>
@@ -564,36 +633,100 @@ function initSimulator() {
         💡 <i>Введи <code>.help &lt;Модуль&gt;</code> для справки</i>
       `;
     }
-    // 11. GHSEARCH
-    else if (cmd.startsWith('.ghsearch') || cmd === '.repo') {
-      textEl.innerHTML = `
-        🛍️ <b>Каталог модулей (1/12):</b><br><br>
-        📦 <b>Nekospy (Шпион)</b><br>
-        📖 <i>Перехват одноразовых фото/видео и удаленных сообщений в ЛС!</i><br>
-        👤 Автор: <code>aswer</code><br>
-        🏷️ Команды: <code>.onetime</code>, <code>.pmspy</code>
-        <div class="tg-inline-keyboard">
-          <div class="tg-btn-row">
-            <button class="tg-inline-btn sim-install-btn">⬇️ Установить модуль</button>
-          </div>
-          <div class="tg-btn-row">
-            <button class="tg-inline-btn sim-prev-btn">⬅️ Назад</button>
-            <button class="tg-inline-btn sim-next-btn">Вперед ➡️</button>
-          </div>
-        </div>
-      `;
-
-      const installBtn = textEl.querySelector('.sim-install-btn');
-      if (installBtn) {
-        installBtn.addEventListener('click', () => {
-          installBtn.textContent = '⏳ Установка и настройка...';
-          installBtn.style.opacity = '0.7';
-          setTimeout(() => {
-            textEl.innerHTML = `✅ <b>Модуль <code>Nekospy</code> успешно установлен и готов к работе!</b><br>Попробуй команду: <code>.onetime</code>`;
-            chatBody.scrollTop = chatBody.scrollHeight;
-          }, 900);
-        });
+    // 11. GHINSTALL
+    else if (cmd.startsWith('.ghinstall')) {
+      const target = rawCmd.replace(/^\.ghinstall\s*/i, '').trim().toLowerCase();
+      if (target === 'gemini' || target.includes('gemini')) {
+        textEl.innerHTML = `
+          ⏳ <b>Загрузка и компиляция модуля <code>Gemini AI</code>...</b><br>
+          📦 Проверка библиотек: <code>aiohttp</code>, <code>aiohttp-socks</code>... OK!<br>
+          ✅ <b>Модуль <code>Google Gemini AI</code> успешно установлен и активен!</b><br><br>
+          💡 <i>Попробуй команду:</i> <code>.gemini Расскажи факт</code> <i>или настрой ключ:</i> <code>.gemini_setup</code>
+        `;
+      } else if (target === 'nekospy') {
+        textEl.innerHTML = `
+          ⏳ <b>Загрузка модуля <code>Nekospy</code>...</b><br>
+          ✅ <b>Модуль <code>Nekospy</code> успешно установлен и готов к работе!</b><br><br>
+          💡 <i>Попробуй команду:</i> <code>.onetime</code>
+        `;
+      } else {
+        textEl.innerHTML = `
+          ✅ <b>Модуль <code>${escapeHtml(target || 'модуль')}</code> успешно установлен!</b><br>
+          Напиши <code>.help</code> для списка доступных команд.
+        `;
       }
+    }
+    // 12. GHSEARCH
+    else if (cmd.startsWith('.ghsearch') || cmd === '.repo') {
+      const searchQ = rawCmd.replace(/^\.ghsearch\s*/i, '').trim().toLowerCase();
+      const showGemini = searchQ.includes('gemini') || searchQ.includes('ии') || searchQ.includes('ai');
+
+      const renderCatalogView = (isGemini) => {
+        if (isGemini) {
+          textEl.innerHTML = `
+            🛍️ <b>Каталог модулей (2/12):</b><br><br>
+            📦 <b>Google Gemini AI (Нейросеть)</b><br>
+            📖 <i>Флагманский ИИ: ответы на вопросы, анализ фото по реплаю, память контекста и системный промпт!</i><br>
+            👤 Автор: <code>aswer</code><br>
+            🏷️ Команды: <code>.gemini</code>, <code>.ai</code>, <code>.gemini_rules</code>
+            <div class="tg-inline-keyboard">
+              <div class="tg-btn-row">
+                <button class="tg-inline-btn sim-install-gemini">⬇️ Установить Gemini AI</button>
+              </div>
+              <div class="tg-btn-row">
+                <button class="tg-inline-btn sim-to-neko">⬅️ Nekospy</button>
+                <button class="tg-inline-btn sim-to-neko">Вперед ➡️</button>
+              </div>
+            </div>
+          `;
+          const geminiInstall = textEl.querySelector('.sim-install-gemini');
+          if (geminiInstall) {
+            geminiInstall.addEventListener('click', () => {
+              geminiInstall.textContent = '⏳ Установка...';
+              geminiInstall.style.opacity = '0.7';
+              setTimeout(() => {
+                textEl.innerHTML = `✅ <b>Модуль <code>Google Gemini AI</code> успешно установлен!</b><br>Попробуй команду: <code>.gemini Объясни устройство нейросетей</code>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+              }, 850);
+            });
+          }
+          const toNekoBtns = textEl.querySelectorAll('.sim-to-neko');
+          toNekoBtns.forEach(btn => btn.addEventListener('click', () => renderCatalogView(false)));
+        } else {
+          textEl.innerHTML = `
+            🛍️ <b>Каталог модулей (1/12):</b><br><br>
+            📦 <b>Nekospy (Шпион)</b><br>
+            📖 <i>Перехват одноразовых фото/видео и удаленных сообщений в ЛС!</i><br>
+            👤 Автор: <code>aswer</code><br>
+            🏷️ Команды: <code>.onetime</code>, <code>.pmspy</code>
+            <div class="tg-inline-keyboard">
+              <div class="tg-btn-row">
+                <button class="tg-inline-btn sim-install-btn">⬇️ Установить Nekospy</button>
+              </div>
+              <div class="tg-btn-row">
+                <button class="tg-inline-btn sim-to-gemini">⬅️ Назад</button>
+                <button class="tg-inline-btn sim-to-gemini">Gemini AI ➡️</button>
+              </div>
+            </div>
+          `;
+          const installBtn = textEl.querySelector('.sim-install-btn');
+          if (installBtn) {
+            installBtn.addEventListener('click', () => {
+              installBtn.textContent = '⏳ Установка и настройка...';
+              installBtn.style.opacity = '0.7';
+              setTimeout(() => {
+                textEl.innerHTML = `✅ <b>Модуль <code>Nekospy</code> успешно установлен и готов к работе!</b><br>Попробуй команду: <code>.onetime</code>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+              }, 850);
+            });
+          }
+          const toGeminiBtns = textEl.querySelectorAll('.sim-to-gemini');
+          toGeminiBtns.forEach(btn => btn.addEventListener('click', () => renderCatalogView(true)));
+        }
+        chatBody.scrollTop = chatBody.scrollHeight;
+      };
+
+      renderCatalogView(showGemini);
     }
     // 12. INFO
     else if (cmd === '.info') {
@@ -735,4 +868,77 @@ function escapeHtml(str) {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+}
+
+/* ==========================================================================
+   9. Эффекты появления карточек при скролле (Card Reveal Animation)
+   ========================================================================== */
+function initCardReveal() {
+  const cards = document.querySelectorAll(
+    '.killer-card, .bento-card, .pricing-card, .step-card, .stat-card, .comparison-card, .cloud-hero-box, .selfhost-terminal-card, .cfg-card'
+  );
+
+  if (!cards.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    cards.forEach(c => c.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  // Группируем карточки по родителям для плавного каскадного появления
+  const parentMap = new Map();
+  cards.forEach(card => {
+    const parent = card.parentElement || document.body;
+    if (!parentMap.has(parent)) {
+      parentMap.set(parent, []);
+    }
+    parentMap.get(parent).push(card);
+  });
+
+  parentMap.forEach(group => {
+    group.forEach((card, idx) => {
+      card.classList.add('reveal-card');
+      card.style.transitionDelay = `${(idx % 4) * 80}ms`;
+      observer.observe(card);
+    });
+  });
+}
+
+/* ==========================================================================
+   10. Свечение карточек при наведении курсором мыши (Mouse Spotlight Glow)
+   ========================================================================== */
+function initMouseGlow() {
+  const glowElements = document.querySelectorAll(
+    '.killer-card, .bento-card, .pricing-card, .step-card, .cmd-card, .stat-card, .comparison-card, .cloud-hero-box, .cloud-bot-card, .cloud-step-item, .selfhost-terminal-card'
+  );
+
+  glowElements.forEach(card => {
+    if (card.dataset.glowBound) return;
+    card.dataset.glowBound = 'true';
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--mouse-x', '-999px');
+      card.style.setProperty('--mouse-y', '-999px');
+    });
+  });
 }

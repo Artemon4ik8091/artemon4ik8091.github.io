@@ -73,7 +73,7 @@
       <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Закрыть меню">✕</button>
     </div>
     <div class="drawer-links">
-      <a href="#features" class="drawer-link" style="color: #f87171; font-weight: 700;">🔥 Топовые фичи (Nekospy, Игры, AFK)</a>
+      <a href="#features" class="drawer-link" style="color: #f87171; font-weight: 700;">🔥 Топовые фичи (Nekospy, Gemini AI, Игры, AFK)</a>
       <a href="#cloud-host" class="drawer-link drawer-link-cloud">☁️ Облачный Хост (@aswer_ubtg_host_bot)</a>
       <a href="#pricing" class="drawer-link">💎 Тарифы и цены</a>
       <a href="#selfhost" class="drawer-link">💻 Захостить самому (Self-Host)</a>
@@ -209,7 +209,36 @@
           </div>
         </div>
 
-        <!-- Карточка 2: TicTacToe -->
+        <!-- Карточка 2: Google Gemini AI (Нейросеть) -->
+        <div class="killer-card highlight-glow ai-glow">
+          <div class="killer-card-top">
+            <span class="killer-badge ai">🧠 Хит #2: Gemini AI</span>
+            <span class="killer-cmd-tag">.gemini | .ai</span>
+          </div>
+          <h3>🤖 Мощнейший ИИ от Google в твоем чате и зрение по фото</h3>
+          <p>
+            Прямая интеграция флагманской нейросети Google Gemini! Задавай любые вопросы без ограничений (<code>.ai</code>), отправляй <strong>фото на анализ по реплаю</strong> (решит пример, разберет код со скриншота, переведет надпись или объяснит мем), веди диалог с памятью контекста и обучай бота под себя через персональный системный промпт (<code>.gemini_rules</code>).
+          </p>
+          <div class="killer-preview">
+            <div class="killer-preview-item">
+              <span class="p-icon">👁️</span>
+              <span><strong>Мультимодальность:</strong> Реплай на любое фото с вопросом — распознает детали, текст и решит задачи</span>
+            </div>
+            <div class="killer-preview-item">
+              <span class="p-icon">🎭</span>
+              <span><strong>Память и характер:</strong> Контекст диалога, переключение моделей и системные правила (.gemini_rules)</span>
+            </div>
+          </div>
+          <div class="killer-install-box">
+            <div>
+              <span class="killer-install-lbl">Установка через установщик:</span>
+              <code>.ghinstall gemini</code>
+            </div>
+            <button class="copy-btn" data-copy=".ghinstall gemini" title="Скопировать команду установки">📋</button>
+          </div>
+        </div>
+
+        <!-- Карточка 3: TicTacToe -->
         <div class="killer-card">
           <div class="killer-card-top">
             <span class="killer-badge game">🎮 Игры в чате</span>
@@ -494,9 +523,11 @@
 
         <!-- Тариф 2: 3 Месяца -->
         <div class="pricing-card">
-          <div class="pricing-badge-save">Скидка ~6.8%</div>
           <div class="pricing-card-header">
-            <div class="plan-period">Период: 90 дней</div>
+            <div class="plan-period-row">
+              <span class="plan-period">Период: 90 дней</span>
+              <span class="pricing-badge-save">Скидка ~6.8%</span>
+            </div>
             <h3 class="plan-title">3 Месяца</h3>
             <div class="plan-price-wrapper">
               <div class="plan-rub">137 ₽</div>
@@ -805,6 +836,7 @@ python3 userbot.py</code></pre>
           <span class="controls-label">Нажми для быстрого теста:</span>
           <div class="cmd-chips">
             <button class="chip-btn active" data-cmd=".onetime">🔥 .onetime (Шпион)</button>
+            <button class="chip-btn" data-cmd=".gemini Расскажи интересный факт о космосе">🧠 .gemini (ИИ)</button>
             <button class="chip-btn" data-cmd=".ttt">🎮 .ttt (Крестики-Нолики)</button>
             <button class="chip-btn" data-cmd=".afk Отошел выпить кофе">💤 .afk (Автоответ)</button>
             <button class="chip-btn" data-cmd=".cgirl Алина">✨ .cgirl (Комплимент)</button>
@@ -834,7 +866,7 @@ python3 userbot.py</code></pre>
             
             <div class="tg-msg msg-out" id="demoMessage">
               <div class="msg-bubble">
-                <div class="msg-text">💡 Нажми любую команду выше или введи команду с точкой (например, <code>.onetime</code>, <code>.ttt</code>, <code>.afk</code>) в поле ниже!</div>
+                <div class="msg-text">💡 Нажми любую команду выше или введи команду с точкой (например, <code>.onetime</code>, <code>.gemini</code>, <code>.ttt</code>) в поле ниже!</div>
                 <div class="msg-meta">
                   <span class="msg-time" id="demoTime">12:00</span>
                   <span class="msg-status">✓✓</span>
@@ -850,7 +882,7 @@ python3 userbot.py</code></pre>
               type="text" 
               id="tgInput" 
               class="tg-input" 
-              placeholder="Напиши команду с точкой, например: .onetime, .ttt или .afk" 
+              placeholder="Напиши команду с точкой, например: .onetime, .gemini или .ttt" 
               autocomplete="off"
             />
             <button type="submit" class="tg-send-btn" title="Отправить команду">
@@ -1100,7 +1132,7 @@ python3 userbot.py</code></pre>
           </button>
           <div class="faq-answer">
             <p>
-              Напишите в любой чат команду <code>.ghsearch &lt;запрос&gt;</code> (например, <code>.ghsearch nekospy</code>) или используйте быструю команду <code>.ghinstall &lt;имя&gt;</code>. Бот сам скачает модуль и установит все необходимые зависимости в фоне!
+              Напишите в любой чат команду <code>.ghsearch &lt;запрос&gt;</code> (например, <code>.ghsearch gemini</code> или <code>.ghsearch nekospy</code>) или используйте быструю команду <code>.ghinstall &lt;имя&gt;</code>. Бот сам скачает модуль и установит все необходимые зависимости в фоне!
             </p>
           </div>
         </div>
